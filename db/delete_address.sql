@@ -1,0 +1,1 @@
+delete from addresses where address_id = $1;

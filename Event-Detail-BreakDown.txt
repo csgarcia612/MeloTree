@@ -1,0 +1,89 @@
+event = object
+
+event.classifications[0].genre.name = 'Genre Name'
+
+event.dates.start.localDate = 'Date of Event'(in "YYYY-MM-DD" calendar layout)
+
+event.dates.start.localTime = 'Time of Event'(in "HH:MM:SS" military time)
+
+event.dates.status.code = '"onsale" OR not??'
+
+even.sales.public.startDateTime = 'Date and Time tix go on sale'
+
+even.sales.public.endDateTime = 'Date and Time tix stop being sold'
+
+event.dates.timezone = timezone name where event is being held'
+
+event.id = 'unique ID key to use'
+
+event.images[6].url = 'image url to render in mini event'
+
+event.images[6].width = 'image width to render in mini event'
+
+event.images[6].height = 'image height to render in mini event'
+
+event.images[0] = 'image to render in full event page'
+
+event.name = 'name of all artists performing in 1 string'(will need to split) ...OR... 'the name of the event' if there are attractions in the event object.
+
+event._embedded.venues[0].name = 'venue name'
+
+event._embedded.venues[0].address.line1 = 'venue street address'
+
+event._embedded.venues[0].city.name = 'venue city'
+
+event._embedded.venues[0].state.name = 'venue state'
+
+event._embedded.venues[0].state.stateCode = 'venue state 2 letter ID'
+
+event._embedded.venues[0].postalCode = 'venue zipcode'
+
+event._embedded.venues[0].location.latitude = 'venue latitude coordinate'
+
+event._embedded.venues[0].location.longitude = 'venue longitude coordinate'
+
+
+"Get Main Artist Name From Event Object"
+
+let splitEventName = event.name.split(
+			", " || "Plus" || "with Special Guest"
+		);
+		let mainArtistName = event._embedded.attractions
+			? event._embedded.attractions[0].name
+			: splitEventName[0];
+
+"Convert Date To Display"
+
+event.dates.start.localDate = (YYYY-MM-DD)
+
+event.dates.start.localTime = (HH:MM:SS)
+
+let splitDate = event.dates.start.localDate.split("-");
+
+
+
+
+"Convert Time To Display"
+
+let splitTime = event.dates.start.localTime.split(":");
+
+let hours = Number(splitTime[0]);
+let minutes = Number(splitTime[1]);
+let seconds = Number(splitTime[2]);
+
+let timeValue;
+
+if (hours > 0 && hours <= 12) {
+  timeValue= "" + hours;
+} else if (hours > 12) {
+  timeValue= "" + (hours - 12);
+} else if (hours == 0) {
+  timeValue= "12";
+}
+
+timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;
+
+timeValue += (seconds < 10) ? ":0" + seconds : ":" + seconds;
+
+timeValue += (hours >= 12) ? " P.M." : " A.M.";
+

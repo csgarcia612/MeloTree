@@ -1,0 +1,363 @@
+.order-confirmation-container {
+	display: flex;
+	position: fixed;
+	top: 53.5%;
+	left: 50%;
+	width: 75%;
+	transform: translate(-50%, -50%);
+	flex-direction: column;
+	z-index: 995;
+	border-radius: 20px;
+	background: rgb(246, 206, 143);
+
+	.close-modal-button {
+		display: flex;
+		position: absolute;
+		top: -15px;
+		right: -15px;
+		justify-content: center;
+		align-items: center;
+		background-color: red;
+		width: 30px;
+		height: 30px;
+		border-style: outset;
+		border-radius: 50%;
+		color: white;
+		text-align: center;
+		font-size: 15px;
+		font-weight: bold;
+		outline: none;
+	}
+
+	.close-modal-button:hover {
+		transform: scale(1.1);
+		box-shadow: red 0px 0px 5px, red 0px 0px 10px, red 0px 0px 15px,
+			red 0px 0px 20px;
+	}
+
+	.close-modal-button:active {
+		border-style: inset;
+	}
+
+	.modal-event-info {
+		display: flex;
+		position: relative;
+		flex-direction: column;
+		margin: 15px;
+
+		.modal-event-name-container {
+			display: flex;
+			position: relative;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+
+			.modal-event-name {
+				font-size: 30px;
+				letter-spacing: 1px;
+			}
+		}
+
+		.modal-date-time-container {
+			display: flex;
+			position: relative;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			margin: 20px 0px 40px 0px;
+
+			.modal-date {
+				font-size: 25px;
+				letter-spacing: 1px;
+			}
+
+			.date-time-split {
+				margin: 0px 20px 0px 20px;
+				font-size: 15px;
+				letter-spacing: 1px;
+			}
+
+			.modal-time {
+				font-size: 25px;
+				letter-spacing: 1px;
+			}
+		}
+
+		.modal-artist-venue-info-container {
+			display: flex;
+			position: relative;
+			flex-direction: row;
+			justify-content: center;
+			align-content: center;
+
+			.modal-artist-info-container {
+				display: flex;
+				position: relative;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+
+				.modal-main-artist-name {
+					font-size: 30px;
+					letter-spacing: 1px;
+				}
+
+				.show-modal-guests {
+					display: flex;
+					position: relative;
+					flex-direction: column;
+					justify-content: flex-start;
+					align-items: center;
+					margin-top: 20px;
+
+					.modal-guest-title {
+						font-size: 20px;
+						letter-spacing: 1px;
+					}
+
+					.guest-artist {
+						font-size: 25px;
+						letter-spacing: 1px;
+						margin-top: 10px;
+					}
+				}
+			}
+
+			.modal-artist-venue-split {
+				display: flex;
+				position: relative;
+				z-index: 999;
+				width: 10px;
+				border-radius: 10px;
+				background-color: #5e1742;
+				margin: 0px 30px 0px 30px;
+			}
+
+			.modal-venue-info-container {
+				display: flex;
+				position: relative;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+
+				.modal-venue-name {
+					font-size: 20px;
+					letter-spacing: 1px;
+				}
+
+				.modal-venue-address {
+					font-size: 20px;
+					letter-spacing: 1px;
+					margin: 15px 0px 5px 0px;
+				}
+
+				.modal-venue-city-state-zip {
+					font-size: 20px;
+					letter-spacing: 1px;
+				}
+
+				.modal-venue-phone {
+					font-size: 20px;
+					letter-spacing: 1px;
+					margin-top: 15px;
+				}
+			}
+		}
+	}
+	.modal-ticket-info {
+		display: flex;
+		position: relative;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		margin: 20px 0px 20px 0px;
+
+		.modal-ticket-price-container {
+			display: flex;
+			position: relative;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			.ticket-price-title {
+				font-size: 25px;
+				letter-spacing: 1px;
+				margin-bottom: 15px;
+			}
+
+			.ticket-price {
+				font-size: 25px;
+				letter-spacing: 1px;
+			}
+		}
+
+		.modal-ticket-quantity-container {
+			display: flex;
+			position: relative;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin: 0px 50px 0px 50px;
+
+			.ticket-quantity-title {
+				font-size: 25px;
+				letter-spacing: 1px;
+			}
+
+			.ticket-quantity-limit {
+				font-size: 20px;
+				letter-spacing: 1px;
+				margin: 7.5px 0px 15px 0px;
+			}
+
+			.ticket-quantity-update {
+				display: flex;
+				position: relative;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+
+				.ticket-quantity-buttons {
+					display: flex;
+					position: relative;
+					justify-content: center;
+					align-items: center;
+					width: 30px;
+					height: 30px;
+					border-style: outset;
+					border-radius: 50%;
+					text-align: justify;
+					font-size: 20px;
+					font-weight: bold;
+					background-color: #5e1742;
+					color: rgb(246, 206, 143);
+				}
+
+				.ticket-quantity-buttons:hover {
+					transform: scale(1.1);
+					box-shadow: #5e1742 0px 0px 5px, #5e1742 0px 0px 10px,
+						#5e1742 0px 0px 15px, #5e1742 0px 0px 20px;
+				}
+
+				.ticket-quantity-buttons:active {
+					border-style: inset;
+				}
+
+				.ticket-quantity {
+					font-size: 25px;
+					margin: 0px 15px 0px 15px;
+				}
+			}
+		}
+		.ticket-total-calc-container {
+			display: flex;
+			position: relative;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+
+			.ticket-tax-container {
+				display: flex;
+				position: relative;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+
+				.ticket-tax-title {
+					font-size: 25px;
+					letter-spacing: 1px;
+					margin-bottom: 15px;
+				}
+
+				.ticket-tax {
+					font-size: 25px;
+					letter-spacing: 1px;
+				}
+			}
+
+			.ticket-total-price-container {
+				display: flex;
+				position: relative;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				margin-left: 50px;
+
+				.ticket-total-price-title {
+					font-size: 25px;
+					letter-spacing: 1px;
+					margin-bottom: 15px;
+				}
+
+				.ticket-total-price {
+					font-size: 25px;
+					letter-spacing: 1px;
+				}
+			}
+		}
+	}
+
+	.modal-buyer-info {
+		display: flex;
+		position: relative;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+
+		.buyer-name {
+			font-size: 25px;
+			letter-spacing: 1px;
+		}
+
+		.buyer-email {
+			margin-left: 50px;
+			font-size: 25px;
+			letter-spacing: 1px;
+		}
+
+		.buyer-inputs {
+			margin: 0px 0px 0px 5px;
+			width: 300px;
+			border-color: rgba(51, 1, 54, 0.9);
+			border-width: 1.5px;
+			border-radius: 10px;
+			padding: 5px;
+			background-color: rgba(150, 117, 122, 0.9);
+			font-size: 20px;
+			text-align: center;
+			color: rgb(246, 206, 143);
+		}
+	}
+
+	.stripe-checkout-form {
+		display: flex;
+		position: relative;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		margin: 20px 0px 20px 0px;
+
+		.stripe-checkout-button {
+			display: flex;
+			position: relative;
+			border-style: outset;
+			border-radius: 10px;
+			padding: 5px;
+			text-align: justify;
+			font-size: 20px;
+			font-weight: bold;
+			background-color: #5e1742;
+			color: rgb(246, 206, 143);
+		}
+
+		.stripe-checkout-button:hover {
+			transform: scale(1.1);
+			box-shadow: #5e1742 0px 0px 5px, #5e1742 0px 0px 10px,
+				#5e1742 0px 0px 15px, #5e1742 0px 0px 20px;
+		}
+
+		.stripe-checkout-button:active {
+			border-style: inset;
+		}
+	}
+}
