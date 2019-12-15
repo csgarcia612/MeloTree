@@ -1,7 +1,92 @@
 .user-profile-container {
-	display: flex;
-	position: relative;
-	flex-direction: column;
-	width: 100%;
-	height: calc(100vh - 35px);
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+  margin-bottom: 50px;
+
+  .user-container {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 35px;
+
+    .user-image-container {
+      margin: 0px 30px 0px 0px;
+
+      img {
+        width: 400px;
+        border-radius: 25px;
+      }
+    }
+
+    .user-info-container {
+      font-size: 24px;
+      margin: 0px 20px;
+
+      p {
+        margin: 20px 0px;
+        letter-spacing: 1px;
+      }
+
+      span {
+        display: flex;
+        position: relative;
+        height: 2.5px;
+        width: 100%;
+        border-radius: 2.5px;
+        background-color: rgb(94, 23, 66);
+        margin: 10px 0px;
+      }
+    }
+  }
+
+  .edit-info-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 20px;
+
+    p {
+      font-size: 24px;
+    }
+
+    input {
+      font-size: 20px;
+      margin: 10px 0px;
+      border: inset;
+      border-radius: 7.5px;
+      width: 350px;
+      outline: none;
+    }
+  }
+
+  .edit-btns-container {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+
+    .edit-btns {
+      font-size: 20px;
+      border-radius: 7.5px;
+      margin: 15px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .open-edit-btn {
+      font-size: 20px;
+      border-radius: 7.5px;
+      margin: 15px 25px;
+      outline: none;
+      cursor: pointer;
+    }
+  }
 }

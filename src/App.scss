@@ -1,23 +1,35 @@
+/* For no scrollbars in Chrome, Safari, newer versions of Opera */
+::-webkit-scrollbar {
+  width: 0 !important; /* remove scrollbar space */
+  background: transparent; /* optional: just make scrollbar invisible */
+}
+
+/* optional: show position indicator in red */
+// ::-webkit-scrollbar-thumb {
+// background: rgb(255, 0, 0);
+// }
+
 html {
   width: 100vw;
   height: 100vh;
+  overflow: -moz-scrollbars-none; /* For no scrollbars in Mozilla Firefox */
+  -ms-overflow-style: none; /* For no scrollbars in Internet Explorer 10+ */
 }
 
 body {
   width: 100vw;
   height: 100vh;
-  // background-image: url('./images/audiencepic.jpg');
-  // background-attachment: fixed;
-  // background-size: cover;
-  // background-repeat: no-repeat;
-  // background-position: bottom;
+  background-image: url('./images/clean-textile.png');
+  background-color: rgb(246, 206, 143);
+  background-attachment: fixed;
+  background-size: auto;
+  background-repeat: repeat;
 }
 
 .App {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: center;
   height: 100%;
   width: 100%;
 
@@ -31,8 +43,7 @@ body {
     display: flex;
     justify-content: center;
     position: relative;
-    width: 100vw;
-    // height: calc(100vh - 50px);
+    width: 100%;
     margin-top: 35px;
   }
 }
