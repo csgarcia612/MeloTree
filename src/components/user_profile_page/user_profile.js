@@ -31,12 +31,30 @@ class UserProfile extends Component {
     first_name: '',
     last_name: '',
     email: '',
-    image_url: ''
+    image_url: '',
+    showProfile: false
   };
 
   componentDidMount() {
     setTimeout(() => {
-      this.fillUserData(this.props);
+      // this.props.userInfo && this.fillUserData(this.props);
+
+      this.props.userInfo &&
+        this.setState({
+          address_one: this.props.userInfo.address.address_one,
+          address_two: this.props.userInfo.address.address_two,
+          auth0_id: this.props.userInfo.auth0_id,
+          city: this.props.userInfo.address.city,
+          state: this.props.userInfo.address.state,
+          zipcode: this.props.userInfo.address.zipcode,
+          username: this.props.userInfo.username,
+          first_name: this.props.userInfo.first_name,
+          last_name: this.props.userInfo.last_name,
+          email: this.props.userInfo.email,
+          image_url: this.props.userInfo.image_url
+        });
+
+      console.log('**Timeout State: ', this.state);
     }, 500);
   }
 
@@ -46,28 +64,26 @@ class UserProfile extends Component {
     });
   };
 
-  fillUserData = () => {
-    console.log('**1st Props: ', this.props.userInfo);
+  // fillUserData = () => {
+  //   // console.log('**1st Props: ', this.props.userInfo);
 
-    if (this.props.userInfo) {
-      this.setState({
-        address_one: this.props.userInfo.address.address_one,
-        address_two: this.props.userInfo.address.address_two,
-        auth0_id: this.props.userInfo.auth0_id,
-        city: this.props.userInfo.address.city,
-        state: this.props.userInfo.address.state,
-        zipcode: this.props.userInfo.address.zipcode,
-        username: this.props.userInfo.username,
-        first_name: this.props.userInfo.first_name,
-        last_name: this.props.userInfo.last_name,
-        email: this.props.userInfo.email,
-        image_url: this.props.userInfo.image_url
-      });
-    }
+  //   this.setState({
+  //     address_one: this.props.userInfo.address.address_one,
+  //     address_two: this.props.userInfo.address.address_two,
+  //     auth0_id: this.props.userInfo.auth0_id,
+  //     city: this.props.userInfo.address.city,
+  //     state: this.props.userInfo.address.state,
+  //     zipcode: this.props.userInfo.address.zipcode,
+  //     username: this.props.userInfo.username,
+  //     first_name: this.props.userInfo.first_name,
+  //     last_name: this.props.userInfo.last_name,
+  //     email: this.props.userInfo.email,
+  //     image_url: this.props.userInfo.image_url
+  //   });
 
-    console.log('**State: ', this.state);
-    console.log('**Props: ', this.props);
-  };
+  //   console.log('**State: ', this.state);
+  //   // console.log('**Props: ', this.props);
+  // };
 
   render() {
     const { editingState } = this.state;
@@ -83,7 +99,7 @@ class UserProfile extends Component {
           if (loading) return <h1>Loading data...</h1>;
           if (error) return <h1>Error!</h1>;
 
-          // console.log('data', data);
+          console.log('data', data);
 
           address_id = data.user.address
             ? +data.user.address.address_id
@@ -93,7 +109,7 @@ class UserProfile extends Component {
       </Query>
     );
 
-    return this.props.userInfo ? (
+    return this.props.user ? (
       <div className='user-profile-container'>
         <div className='edit-info-container'>
           {editingState ? (
@@ -479,7 +495,9 @@ class UserProfile extends Component {
         </div>
       </div>
     ) : (
-      <div>**Please Log In**</div>
+      <div className='logged-out-err-container'>
+        <p className='logged-out-err-msg'>**Please Log In**</p>
+      </div>
     );
   }
 }

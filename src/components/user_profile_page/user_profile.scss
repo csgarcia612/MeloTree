@@ -47,6 +47,10 @@
     }
   }
 
+  .hide-user-info-container {
+    display: none;
+  }
+
   .edit-info-container {
     display: flex;
     position: relative;
@@ -88,5 +92,9 @@
       outline: none;
       cursor: pointer;
     }
+  }
+
+  .hide-edit-btns-container {
+    display: none;
   }
 }
