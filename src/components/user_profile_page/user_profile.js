@@ -29,16 +29,26 @@ class UserProfile extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      // this.props.userInfo && this.fillUserData(this.props);
+      // console.log('*** UserInfoProps: ', this.props);
 
       this.props.userInfo &&
         this.setState({
-          address_one: this.props.userInfo.address.address_one,
-          address_two: this.props.userInfo.address.address_two,
+          address_one: this.props.userInfo.address
+            ? this.props.userInfo.address.address_one
+            : '',
+          address_two: this.props.userInfo.address
+            ? this.props.userInfo.address.address_two
+            : '',
           auth0_id: this.props.userInfo.auth0_id,
-          city: this.props.userInfo.address.city,
-          state: this.props.userInfo.address.state,
-          zipcode: this.props.userInfo.address.zipcode,
+          city: this.props.userInfo.address
+            ? this.props.userInfo.address.city
+            : '',
+          state: this.props.userInfo.address
+            ? this.props.userInfo.address.state
+            : '',
+          zipcode: this.props.userInfo.address
+            ? this.props.userInfo.address.zipcode
+            : '',
           username: this.props.userInfo.username,
           first_name: this.props.userInfo.first_name,
           last_name: this.props.userInfo.last_name,
@@ -56,37 +66,25 @@ class UserProfile extends Component {
     });
   };
 
-  // fillUserData = () => {
-  //   console.log('**1st Data Info: ', this.props);
-
-  //   this.setState({
-  //     // address_one: user.address.address_one,
-  //     // address_two: user.address.address_two,
-  //     // auth0_id: user.auth0_id,
-  //     // city: user.address.city,
-  //     // state: user.address.state,
-  //     // zipcode: user.address.zipcode,
-  //     // username: user.username,
-  //     // first_name: user.first_name,
-  //     // last_name: user.last_name,
-  //     // email: user.email,
-  //     // image_url: user.image_url,
-  //     editingState: 'update'
-  //   });
-
-  //   console.log('**State: ', this.state);
-  //   // console.log('**Props: ', this.props);
-  // };
-
   render() {
     const { editingState } = this.state;
-    let address_id;
+    let address_id = !this.state.auth0_id
+      ? ''
+      : this.props.userInfo.address
+      ? this.props.userInfo.address.address_id
+      : '';
 
-    const user_id = this.props.user && this.props.user.auth0_id;
-    const auth0_id = this.props.user && this.props.user.auth0_id;
-    // console.log('userID', this.props.user);
+    const user_id = !this.state.auth0_id
+      ? this.props.user && this.props.user.auth0_id
+      : this.props.userInfo && this.props.userInfo.auth0_id;
 
-    const getUser = (auth0_id, func) => (
+    const auth0_id = !this.state.auth0_id
+      ? this.props.user && this.props.user.auth0_id
+      : this.props.userInfo && this.props.userInfo.auth0_id;
+
+    // console.log('*** Props User: ', this.props.user);
+
+    const getUser = auth0_id => (
       <Query query={GET_USER} variables={{ auth0_id }}>
         {({ loading, error, data }) => {
           if (loading) return <h1>Loading data...</h1>;
@@ -103,7 +101,7 @@ class UserProfile extends Component {
       </Query>
     );
 
-    return this.state ? (
+    return this.props.user || this.props.userInfo ? (
       <React.Fragment>
         {!this.state.auth0_id ? (
           <div>{getUser(user_id, this.fillUserData)}</div>
@@ -247,7 +245,7 @@ class UserProfile extends Component {
                     className='open-edit-btn'
                     onClick={() => this.setState({ editingState: 'update' })}
                   >
-                    Update Profile
+                    Edit Profile
                   </button>
                 </React.Fragment>
               )}
@@ -283,7 +281,7 @@ class UserProfile extends Component {
                             });
                           }}
                         >
-                          Submit
+                          Save
                         </button>
                         {loading && <h1>Loading data...</h1>}
                         {error && <h1>Error!</h1>}
@@ -368,7 +366,7 @@ class UserProfile extends Component {
                             });
                           }}
                         >
-                          Submit
+                          Save
                         </button>
                         {loading && <h1>Loading data...</h1>}
                         {error && <h1>Error!</h1>}
@@ -421,7 +419,8 @@ class UserProfile extends Component {
                               variables: {
                                 input: {
                                   user_id: this.props.userInfo.user_id,
-                                  address_id: address_id,
+                                  address_id: this.props.userInfo.address
+                                    .address_id,
                                   address_one: this.state.address_one,
                                   address_two: this.state.address_two,
                                   city: this.state.city,
@@ -432,7 +431,7 @@ class UserProfile extends Component {
                             });
                           }}
                         >
-                          Submit
+                          Save
                         </button>
                         {loading && <h1>Loading data...</h1>}
                         {error && <h1>Error!</h1>}
@@ -511,6 +510,7 @@ class UserProfile extends Component {
     );
   }
 }
+
 const mapStateToProp = state => {
   return {
     user: state.user

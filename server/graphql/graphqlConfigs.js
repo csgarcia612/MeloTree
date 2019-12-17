@@ -167,7 +167,7 @@ module.exports = {
               user_id
             })
             .then(response => response[0]);
-          console.log('address update address', address);
+          // console.log('address update address', address);
 
           address.user_id = {
             username: address.username,
@@ -189,7 +189,7 @@ module.exports = {
               user_id
             })
             .then(response => response[0]);
-          console.log('add adress ', address);
+          // console.log('add adress ', address);
           address.user_id = {
             username: address.username,
             first_name: address.first_name,
