@@ -30,13 +30,13 @@ class EventDetails extends Component {
 
   getEvent() {
     let eventID = this.props.match.params && this.props.match.params.id;
-    console.log('eventID', eventID);
+    // console.log('eventID', eventID);
     axios
       .get(
         `https://app.ticketmaster.com/discovery/v2/events/${eventID}.json?apikey=eIMh2CGNhtUTSybN21TU3JRes1j9raV3`
       )
       .then(res => {
-        console.log('res.data', res.data);
+        // console.log('res.data', res.data);
         this.setState({
           singleEvent: res.data
         });
@@ -90,7 +90,7 @@ class EventDetails extends Component {
   }
 
   getPrice() {
-    let randomPrice = Math.floor(Math.random() * (500 - 30) + 1);
+    let randomPrice = Math.floor(Math.random() * (250 - 10) + 1);
     this.setState({
       ticketPrice: randomPrice
     });
@@ -104,7 +104,7 @@ class EventDetails extends Component {
 
   render() {
     const { singleEvent, ticketPrice } = this.state;
-    // let event = singleEvent && singleEvent._embedded.venues[0].name
+
     let location =
       singleEvent &&
       `${singleEvent._embedded.venues[0].location.latitude}, ${singleEvent._embedded.venues[0].location.longitude}`;
@@ -116,9 +116,37 @@ class EventDetails extends Component {
         .join(',')
         .split('with')
         .join(',')
-        .split('-')
+        .split('Ft')
         .join(',')
+        .split('Presents')
+        .join('')
+        // .split('-')
+        // .join(',')
         .split(',');
+
+    let splitVenueName =
+      singleEvent &&
+      singleEvent._embedded.venues[0].name
+        .split(' at ')
+        .join(',')
+        .split(',')
+        .join(':');
+
+    if (
+      singleEvent &&
+      splitVenueName &&
+      splitVenueName.includes('presented by')
+    ) {
+      splitVenueName = splitVenueName.split(' presented by ')[0];
+    } else {
+      if (singleEvent && splitVenueName && splitVenueName.indexOf(':')) {
+        splitVenueName = splitVenueName.substring(
+          splitVenueName.indexOf(':') + 1
+        );
+      }
+    }
+
+    // console.log('***splitVenueName: ', splitVenueName);
 
     let mainArtistName =
       singleEvent &&
@@ -209,9 +237,7 @@ class EventDetails extends Component {
               </div>
               <div className='event-artist-info-container'>
                 <div className='main-artist-container'>
-                  <p className='venue-presents'>
-                    {singleEvent._embedded.venues[0].name}
-                  </p>
+                  <p className='venue-presents'>{splitVenueName}</p>
                   <p className='proudly-presents'>Proudly Presents</p>
                   <p className='artist-name'>{mainArtistName}</p>
                 </div>
@@ -239,9 +265,7 @@ class EventDetails extends Component {
                   />
                 </div>
                 <div className='event-venue-info-container'>
-                  <p className='venue-name'>
-                    {singleEvent._embedded.venues[0].name}
-                  </p>
+                  <p className='venue-name'>{splitVenueName}</p>
                   <div className='venue-address-container'>
                     <p className='venue-street-address'>
                       {singleEvent._embedded.venues[0].address.line1}
@@ -291,7 +315,4 @@ const mapDispatchToProps = {
   setUser: setUser
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EventDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(EventDetails);

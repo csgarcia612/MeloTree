@@ -43,7 +43,6 @@ let client = redis.createClient(process.env.REDIS_URI);
 app.use(
   session({
     store: new RedisStore({ client }),
-    // store: new RedisStore({ client: process.env.REDIS_URI }),
     secret: process.env.REDIS_SECRET,
     saveUninitialized: false,
     resave: false,

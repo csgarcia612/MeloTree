@@ -23,17 +23,26 @@ class Header extends Component {
     });
   }
 
-  login() {
+  login(req, res) {
+    console.log('***Window Location: ', window.location);
+
+    let refererURL = window.location.href;
+
     let redirectUri = encodeURIComponent(
       window.location.origin + '/auth/callback'
     );
-    window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&response_type=code`;
+
+    // console.log('*** refererURL: ', refererURL);
+
     // console.log('redirectUri', redirectUri);
+
+    window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererURL}&response_type=code`;
   }
 
   logout = () => {
     axios.post('/api/logout').then(res => {
       this.props.setUser(null);
+
       this.props.history.push('/');
     });
   };
@@ -132,9 +141,9 @@ class Header extends Component {
                   <li>
                     <a href='/'>Home</a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a href='/contact'>Contact</a>
-                  </li>
+                  </li> */}
                   <li>
                     <a href='/about'>About</a>
                   </li>

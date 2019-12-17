@@ -1,10 +1,10 @@
 const axios = require('axios'),
-  index = require('../index');
+  index = require('../index'),
+  url = require('url');
 
 module.exports = {
   login: (req, res) => {
-    const { code } = req.query;
-    // console.log('***req.query.code :', code);
+    // console.log('***req.query: ', req.query);
 
     let redirect_uri =
       process.env.HOST == 'localhost'
@@ -16,7 +16,6 @@ module.exports = {
       client_secret: process.env.AUTH0_CLIENT_SECRET,
       code: req.query.code,
       grant_type: 'authorization_code',
-      // redirect_uri: `http://${req.headers.host}/auth/callback`
       redirect_uri
     };
 
@@ -59,8 +58,10 @@ module.exports = {
             email: newUser[0].email,
             image_url: newUser[0].image_url
           };
+
           // console.log('***req.session: ', req.session);
-          res.redirect('/');
+
+          res.status(200).redirect(req.query.state);
         } else {
           let splitName = user.name.split(' ');
           if (splitName.length === 1) {
@@ -81,7 +82,7 @@ module.exports = {
               // console.log('*** newlyCreateUser', newlyCreateUser);
               req.session.user = newlyCreateUser[0];
               // console.log('***req.session', req.session);
-              res.redirect('/');
+              res.send(200).redirect(req.query.state);
             })
             .catch(error => {
               console.log(('***error in create_user: ', error));

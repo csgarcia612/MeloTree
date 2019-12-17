@@ -210,23 +210,23 @@ class search_results extends Component {
         <div className={'filters'}>
           <div className={'filter-container'}>
             <h2>Start Date</h2>
-            <input
+            {/* <input
               name='startDateTime'
               type='date'
               onChange={e => this.handleUserInput(e)}
-            />
+            /> */}
           </div>
           <div className={'filter-container'}>
             <h2>End Date</h2>
-            <input
+            {/* <input
               name='endDateTime'
               type='date'
               onChange={e => this.handleUserInput(e)}
-            />
+            /> */}
           </div>
           <div className={'filter-container'}>
             <h2>Distance</h2>
-            <input
+            {/* <input
               type='number'
               name='radius'
               min='10'
@@ -234,11 +234,11 @@ class search_results extends Component {
               step='10'
               value={this.state.radius}
               onChange={e => this.handleUserInput(e)}
-            />
+            /> */}
           </div>
           <div className={'filter-container'}>
             <h2>Genre</h2>
-            <select name='genreId' onChange={e => this.handleUserInput(e)}>
+            {/* <select name='genreId' onChange={e => this.handleUserInput(e)}>
               <option value='KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF'>
                 All Genres
               </option>
@@ -263,7 +263,7 @@ class search_results extends Component {
               <option value='KnvZfZ7vAe7'>Religious</option>
               <option value='KnvZfZ7vAeA'>Rock</option>
               <option value='KnvZfZ7vAeF'>World</option>
-            </select>
+            </select> */}
           </div>
           <div className={'filter-container'} onClick={this.handleSearch}>
             {/* <button onClick={() => this.setState({ ...initialState })}>

@@ -46,7 +46,9 @@ class SingleResult extends Component {
 
     // console.log('venueName B4 : substring', splitVenueName);
 
-    splitVenueName = splitVenueName.indexOf(':')
+    splitVenueName = splitVenueName.includes('presented by')
+      ? splitVenueName.split(' presented by ')[0]
+      : splitVenueName.indexOf(':')
       ? splitVenueName.substring(splitVenueName.indexOf(':') + 1)
       : splitVenueName;
 
