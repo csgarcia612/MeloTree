@@ -18,10 +18,10 @@ class App extends Component {
         <header>
           <Header />
         </header>
-        <div className='site-contents-container'>
-          {routes}
+        <div className='site-contents-container'>{routes}</div>
+        <footer>
           <Footer />
-        </div>
+        </footer>
       </div>
     );
   }

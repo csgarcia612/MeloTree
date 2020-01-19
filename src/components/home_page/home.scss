@@ -13,8 +13,8 @@
   position: relative;
   align-items: center;
   flex-direction: column;
-  height: calc(100vh - 35px);
   width: 100%;
+  height: calc(100vh - 70px);
   background-image: url('../../images/audiencepic.jpg');
   background-attachment: fixed;
   background-size: cover;
@@ -59,13 +59,13 @@
     display: flex;
     position: relative;
     height: 300px;
-    top: 18px;
+    top: 25px;
   }
 
   .search-box {
     display: flex;
     position: relative;
-    top: 18px;
+    top: 25px;
     left: 37px;
     width: 580px;
     border-radius: 5px;

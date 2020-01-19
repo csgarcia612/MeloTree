@@ -13,18 +13,28 @@ class search_results extends Component {
     this.state = {
       loading: true,
       city: this.props.city,
+      showFilters: true,
       startDateTime: null,
       endDateTime: null,
       radius: 50,
       genreId:
         'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF',
-      filterToggle: true,
       filteredLocations: null,
       searchInput: '',
-      formatedCityName: ''
+      formatedCityName: '',
+      filteredCities: [],
+      showSuggestedCities: false,
+      showWarningModal: false
     };
     this.setSearchInput = this.setSearchInput.bind(this);
     this.searchEvents = this.searchEvents.bind(this);
+    this.getCitySuggestions = this.getCitySuggestions.bind(this);
+    // this.goToSearchResults = this.goToSearchResults.bind(this);
+    this.updateSearchInput = this.updateSearchInput.bind(this);
+    this.hoveredCity = this.hoveredCity.bind(this);
+    this.selectCity = this.selectCity.bind(this);
+    this.toggleWarningModal = this.toggleWarningModal.bind(this);
+    this.toggleFilters = this.toggleFilters.bind(this);
   }
 
   componentDidMount() {
@@ -57,12 +67,12 @@ class search_results extends Component {
   }
 
   searchEvents() {
-    const { formatedCityName } = this.state;
+    const { radius, formatedCityName } = this.state;
     // console.log('searchEvents-formattedCityName---', formatedCityName);
     formatedCityName &&
       axios
         .get(
-          `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=eIMh2CGNhtUTSybN21TU3JRes1j9raV3&radius=50&sort=date,asc&classificationName=[music]&unit=miles&city=${formatedCityName}`
+          `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=eIMh2CGNhtUTSybN21TU3JRes1j9raV3&radius=${radius}&sort=date,asc&classificationName=[music]&unit=miles&city=${formatedCityName}`
         )
         .then(res => {
           // console.log('res.data in searchquery response', res.data);
@@ -70,104 +80,176 @@ class search_results extends Component {
             this.props.setEvents(null);
           } else {
             this.props.setEvents(res.data);
-            // this.state.city && this.props.setCity(this.props.city);
           }
-          // this.setState({
-          //   filteredLocations: null
-          // });
         })
         .catch(error => {
           // console.log('---error in search', error);
         });
   }
 
-  // handleSearch = () => {
-  // 	console.log('city in handlesearch', this.props.city);
-  // 	let searchQuery = `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=eIMh2CGNhtUTSybN21TU3JRes1j9raV3&classificationName=[music]&size=20&sort=date,asc`;
-  // 	// let filterCriteria = {};
-  // 	for (let key in this.state) {
-  // 		if (this.state[key]) {
-  // 			searchQuery += `&${key}=${this.state[key]}`;
-  // 			if (
-  // 				key === 'startDateTime' ||
-  // 				(key === 'endDateTime' && this.state[key])
-  // 			) {
-  // 				searchQuery += 'T00:00:00Z';
-  // 			}
-  // 		}
-  // 	}
-  // 	axios
-  // 		.get(searchQuery)
-  // 		.then(response => {
-  // 			console.log('response.data in searchquery response', response.data);
-  // 			if (response.data.page.totalElements === 0) {
-  // 				this.props.setEvents(null);
-  // 			} else {
-  // 				this.props.setEvents(response.data);
-  // 				this.state.city && this.props.setCity(this.props.city);
-  // 			}
-  // 			this.setState({
-  // 				filteredLocations: null
-  // 			});
-  // 		})
-  // 		.catch(error => {
-  // 			console.log('---error in search', error);
-  // 		});
-  // };
+  getCitySuggestions(event) {
+    // console.log('getCitySuggestions Event---', event);
 
-  // displayFilteredCities = userInput => {
-  // 	let filteredLocations;
-  // 	let searchFilter = new RegExp(userInput, 'gi');
-  // 	filteredLocations = this.props.citiesList.filter(e => {
-  // 		return e.city.match(searchFilter) || e.state.match(searchFilter);
-  // 	});
-  // 	this.setState({
-  // 		filteredLocations
-  // 	});
-  // };
+    const { cursorPosition, filteredCities, showSuggestedCities } = this.state;
 
-  // handleFilterToggle = initialState => {
-  // 	this.setState({
-  // 		filterToggle: !this.state.filterToggle
-  // 	});
-  // 	if (this.state.filterToggle === false) {
-  // 		this.setState({
-  // 			...initialState
-  // 		});
-  // 	}
-  // };
+    let keyPressed = event.keyCode;
+
+    // console.log('keyPressed---', keyPressed);
+
+    // console.log('getCitySuggestions--localState: ', this.state);
+
+    if (keyPressed === 13) {
+      if (showSuggestedCities === true) {
+        // console.log('target city---', filteredCities[cursorPosition]);
+
+        let urlCityName = filteredCities[cursorPosition].name
+          .toLowerCase()
+          .replace(/[ ]/g, '%20')
+          .replace(/[.]/g, '%2E')
+          .replace(/[-]/g, '%2D')
+          .replace(/[']/g, '%27');
+
+        this.setState(
+          {
+            formatedCityName: urlCityName,
+            searchInput: filteredCities[cursorPosition].name,
+            showSuggestedCities: false
+          }
+          // console.log('getCitySuggestions--enterKey-localState: ', this.state)
+        );
+      } else {
+        this.goToSearchResults();
+      }
+    } else if (keyPressed === 38 && cursorPosition > 0) {
+      this.setState(prevState => ({
+        cursorPosition: prevState.cursorPosition - 1
+      }));
+      // console.log('cursorPosition: ', cursorPosition);
+      console.log('***filteredCitiesArr: ', filteredCities);
+    } else if (
+      keyPressed === 40 &&
+      cursorPosition < filteredCities.length - 1
+    ) {
+      this.setState(prevState => ({
+        cursorPosition: prevState.cursorPosition + 1
+      }));
+      // console.log('cursorPosition: ', cursorPosition);
+    } else {
+      if (this.state.searchInput.length >= 2) {
+        // console.log(
+        //   'getCitySuggestions--City List Axios Get Call: ',
+        //   this.state
+        // );
+
+        axios
+          .get(
+            `https://www.ticketmaster.com/api/localization/locations/city?boundary.country=us&city=${this.state.formatedCityName}`
+          )
+          .then(res => {
+            // console.log(
+            //   'getCitySuggestions--ticketmasterCities--res.data',
+            //   res.data.locations
+            // );
+            this.setState({
+              filteredCities: res.data.locations,
+              showSuggestedCities: true
+            });
+          });
+      } else {
+        this.setState({
+          cursorPosition: 0,
+          showSuggestedCities: false
+        });
+      }
+    }
+  }
+
+  updateSearchInput(event) {
+    let urlCityName = event.target.value
+      .toLowerCase()
+      .replace(/[ ]/g, '%20')
+      .replace(/[.]/g, '%2E')
+      .replace(/[-]/g, '%2D')
+      .replace(/[']/g, '%27');
+
+    // console.log('updateSearchInput--urlCityName: ', urlCityName);
+
+    this.setState({
+      formatedCityName: urlCityName,
+      searchInput: event.target.value
+    });
+    // console.log('***searchInput:', this.state.searchInput);
+    // ** Don't use Vanilla JavaScript here. The below code makes the event persist and without unmounting it continued to search the initial city name instead of searching the new input. The 'onKeyUp' attribute on the input field can fire the city drop down function instead of putting it on the 'event listener'. **
+    // document.addEventListener('keyup', this.getCitySuggestions);
+  }
+
+  hoveredCity(i) {
+    this.setState({
+      cursorPosition: i
+    });
+
+    // console.log('newCursorPosition: ', this.state.cursorPosition);
+  }
+
+  selectCity(city, i) {
+    let urlCityName = this.state.filteredCities[i].name
+      .toLowerCase()
+      .replace(/[ ]/g, '%20')
+      .replace(/[.]/g, '%2E')
+      .replace(/[-]/g, '%2D')
+      .replace(/[']/g, '%27');
+
+    this.setState({
+      cursorPosition: i,
+      formatedCityName: urlCityName,
+      searchInput: city.name,
+      showSuggestedCities: false
+    });
+
+    // console.log('newState: ', this.state);
+  }
+
+  toggleWarningModal() {
+    this.setState({
+      showWarningModal: !this.state.showWarningModal
+    });
+  }
+
+  toggleFilters() {
+    console.log('***Show Filters : ', this.state.showFilters);
+
+    this.setState({
+      showFilters: !this.state.showFilters
+    });
+  }
 
   render() {
-    // const searchDropDown =
-    // 	this.state.filteredLocations &&
-    // 	this.state.filteredLocations.map(e => {
-    // 		return (
-    // 			<NavLink to='/search'>
-    // 				<div
-    // 					key={e.rank}
-    // 					name='search'
-    // 					// onClick={}
-    // 					className={
-    // 						this.state.filteredLocations.length > 0
-    // 							? 'search-dropdown'
-    // 							: 'filters-off'
-    // 					}
-    // 				>
-    // 					<p>
-    // 						{e.city}, {e.state}
-    // 					</p>
-    // 				</div>
-    // 			</NavLink>
-    // 		);
-    // 	});
-    // const initialState = {
-    // 	city: this.props.city,
-    // 	startDateTime: null,
-    // 	endDateTime: null,
-    // 	radius: 50,
-    // 	genreId:
-    // 		'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF'
-    // };
+    const {
+      filteredCities,
+      searchInput,
+      cursorPosition,
+      showSuggestedCities,
+      showWarningModal,
+      showFilters
+    } = this.state;
+
+    const citySuggestions = filteredCities.map((city, i, filteredCities) => {
+      // console.log('mappedFilteredList---', city);
+
+      return (
+        <li
+          key={`${city.dmaId}-${city.name}`}
+          className={
+            cursorPosition === i ? 'activeSuggestion' : 'inactiveSuggestion'
+          }
+          onClick={() => this.selectCity(city, i)}
+          onMouseOver={() => this.hoveredCity(i)}
+        >
+          <p>{city.description}</p>
+        </li>
+      );
+    });
+
     const eventsList =
       this.props.events &&
       this.props.events._embedded.events.map(e => {
@@ -185,17 +267,6 @@ class search_results extends Component {
     // console.log("state", this.state);
     return (
       <div className='search-results-container'>
-        {/* <div className='search-bar'> */}
-        {/* <div>
-						<input
-							type='text'
-							className='input-field'
-							name='city'
-							placeholder={this.state.city}
-							onChange={e => this.handleQuery(e)}
-							// onKeyDown={e => this.onKeyDown(e)}
-						/>
-					</div> */}
         {/* <div className='dropdown-menu'>
 						{this.state.filteredLocations && searchDropDown}
 					</div>
@@ -206,27 +277,68 @@ class search_results extends Component {
 						onClick={() => this.handleFilterToggle(initialState)}
 						className={this.state.filterToggle ? 'buttonOn' : 'buttonOff'}
 					/> */}
-        {/* </div> */}
-        <div className={'filters'}>
-          <div className={'filter-container'}>
-            <h2>Start Date</h2>
-            {/* <input
+        <div
+          className={showWarningModal ? 'showWarningModal' : 'hideWarningModal'}
+          onClick={this.toggleWarningModal}
+        >
+          <div className='searchWarningModal'>
+            <p className='searchWarning'>
+              Please Enter A Valid City Name Before You Search For Events
+            </p>
+          </div>
+        </div>
+        <div className='search-filters-container'>
+          <div
+            className={
+              showFilters ? 'show-search-filters' : 'hide-search-filters'
+            }
+          >
+            <div className='search-container'>
+              <div className='search-box'>
+                <input
+                  className='home-search-input'
+                  placeholder='Search by City or State'
+                  onChange={this.updateSearchInput}
+                  onKeyUp={this.getCitySuggestions}
+                  value={searchInput}
+                />
+                <button
+                  className='homeSearchBtn'
+                  onClick={this.goToSearchResults}
+                >
+                  Search
+                </button>
+              </div>
+              <div
+                className={
+                  showSuggestedCities
+                    ? 'showCitiesDropDown'
+                    : 'hideCitiesDropDown'
+                }
+              >
+                <ul className='suggestionList'>{citySuggestions}</ul>
+              </div>
+            </div>
+            <div className='filters-container'>
+              <div className={'filter'}>
+                <h2>Start Date</h2>
+                {/* <input
               name='startDateTime'
               type='date'
               onChange={e => this.handleUserInput(e)}
             /> */}
-          </div>
-          <div className={'filter-container'}>
-            <h2>End Date</h2>
-            {/* <input
+              </div>
+              <div className={'filter'}>
+                <h2>End Date</h2>
+                {/* <input
               name='endDateTime'
               type='date'
               onChange={e => this.handleUserInput(e)}
             /> */}
-          </div>
-          <div className={'filter-container'}>
-            <h2>Distance</h2>
-            {/* <input
+              </div>
+              <div className={'filter'}>
+                <h2>Distance</h2>
+                {/* <input
               type='number'
               name='radius'
               min='10'
@@ -235,10 +347,10 @@ class search_results extends Component {
               value={this.state.radius}
               onChange={e => this.handleUserInput(e)}
             /> */}
-          </div>
-          <div className={'filter-container'}>
-            <h2>Genre</h2>
-            {/* <select name='genreId' onChange={e => this.handleUserInput(e)}>
+              </div>
+              <div className={'filter'}>
+                <h2>Genre</h2>
+                {/* <select name='genreId' onChange={e => this.handleUserInput(e)}>
               <option value='KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF'>
                 All Genres
               </option>
@@ -264,13 +376,23 @@ class search_results extends Component {
               <option value='KnvZfZ7vAeA'>Rock</option>
               <option value='KnvZfZ7vAeF'>World</option>
             </select> */}
-          </div>
-          <div className={'filter-container'} onClick={this.handleSearch}>
-            {/* <button onClick={() => this.setState({ ...initialState })}>
+              </div>
+              <div className={'filter'} onClick={this.handleSearch}>
+                {/* <button onClick={() => this.setState({ ...initialState })}>
 							Clear
 						</button> */}
-            {/* <button >Search</button> */}
-            <p>Filter Results</p>
+                {/* <button >Search</button> */}
+                <p>Filter Results</p>
+              </div>
+            </div>
+          </div>
+          <div className='filters-dropdown-btn-container'>
+            <button
+              className='filters-dropdown-btn'
+              onClick={this.toggleFilters}
+            >
+              Filters
+            </button>
           </div>
         </div>
         <div className='events-list'>

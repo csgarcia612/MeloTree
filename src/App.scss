@@ -14,36 +14,53 @@ html {
   height: 100vh;
   overflow: -moz-scrollbars-none; /* For no scrollbars in Mozilla Firefox */
   -ms-overflow-style: none; /* For no scrollbars in Internet Explorer 10+ */
-}
 
-body {
-  width: 100vw;
-  height: 100vh;
-  background-image: url('./images/clean-textile.png');
-  background-color: rgb(246, 206, 143);
-  background-attachment: fixed;
-  background-size: auto;
-  background-repeat: repeat;
-}
+  body {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('./images/clean-textile.png');
+    background-color: rgb(246, 206, 143);
+    background-attachment: fixed;
+    background-size: auto;
+    background-repeat: repeat;
 
-.App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+    .App {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      width: 100%;
 
-  header {
-    display: flex;
-    position: fixed;
-    z-index: 900;
-  }
+      header {
+        display: flex;
+        position: fixed;
+        top: 0px;
+        z-index: 900;
+        width: 100vw;
+        height: 35px;
+        justify-content: center;
+        align-items: center;
+      }
 
-  .site-contents-container {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    margin-top: 35px;
+      .site-contents-container {
+        display: flex;
+        position: relative;
+        width: 100vw;
+        margin: 35px 0px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      footer {
+        display: flex;
+        position: fixed;
+        bottom: 0px;
+        z-index: 900;
+        width: 100vw;
+        height: 35px;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   }
 }
