@@ -9,7 +9,9 @@ class SingleResult extends Component {
 
   render() {
     const { event } = this.props;
-    // console.log('event', event);
+
+    console.log('***Event Info : ', event);
+
     let splitEventName = event.name
       .replace(/ [(]/g, ',')
       .split(' Plus ')
@@ -25,16 +27,27 @@ class SingleResult extends Component {
       .split(',');
 
     let splitAttractionName =
-      event._embedded.attractions &&
-      event._embedded.attractions[0].name
-        .replace(/ [(]/g, ',')
-        .split(' Plus ')
-        .join(',')
-        .split(' With ')
-        .join(',')
-        .split('-')
-        .join(',')
-        .split(',');
+      event._embedded.attractions && event._embedded.attractions[0].name
+        ? event._embedded.attractions &&
+          event._embedded.attractions[0].name
+            .replace(/ [(]/g, ',')
+            .split(' Plus ')
+            .join(',')
+            .split(' With ')
+            .join(',')
+            .split('-')
+            .join(',')
+            .split(',')
+        : event._embedded.attractions &&
+          event.name
+            .replace(/ [(]/g, ',')
+            .split(' Plus ')
+            .join(',')
+            .split(' With ')
+            .join(',')
+            .split('-')
+            .join(',')
+            .split(',');
 
     let splitVenueName =
       event._embedded.venues &&

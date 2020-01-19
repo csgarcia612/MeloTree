@@ -128,33 +128,36 @@
   //   }
   // }
 
-  .search-filters-container {
+  .search-filters-main-container {
     display: flex;
-    position: relative;
+    position: absolute;
     flex-direction: column;
+    z-index: 800;
+    top: 0px;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    // background-color: rgba(94, 23, 66, 0.75);
-    width: 100%;
-    height: auto;
 
-    .show-search-filters {
+    .search-filters-btn-container {
       display: flex;
-      position: relative;
+      position: fixed;
       flex-direction: row;
-      justify-content: space-evenly;
-      align-items: center;
+      z-index: 950;
+      top: 35px;
       width: 100%;
-      height: 100px;
-      background-color: rgba(94, 23, 66, 0.75);
-      transition: 0.5s ease-in-out;
-      transform: translate(0%, 0%);
+      height: 50px;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgb(94, 23, 66);
+      box-shadow: #5e1742 0px 0px 0px 0px, #5e1742 0px 0px 10px 10px;
+      padding-top: 10px;
 
       .search-container {
         display: flex;
         position: relative;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: center;
+        margin-left: 10px;
 
         .search-box {
           display: flex;
@@ -281,12 +284,58 @@
         }
       }
 
+      .filters-drpdwn-btn-container {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+
+        .filters-drpdwn-btn {
+          display: flex;
+          position: relative;
+          justify-content: center;
+          align-items: center;
+          background-color: rgb(94, 23, 66);
+          width: 140px;
+          font-family: 'Open Sans', sans-serif;
+          font-size: 18px;
+          text-align: center;
+          color: rgb(246, 206, 143);
+          border-style: outset;
+          border-width: 1.5px;
+          border-color: rgb(246, 206, 143);
+          border-radius: 5px;
+          outline: none;
+          cursor: pointer;
+        }
+
+        .filters-drpdwn-btn:active {
+          border-style: inset;
+        }
+      }
+    }
+
+    .show-search-filters {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      background-color: rgb(94, 23, 66);
+      box-shadow: #5e1742 0px 0px 0px 0px, #5e1742 0px 0px 10px 10px;
+      transition: 1s ease-in-out;
+      transform: translate(0%, 50%);
+
       .filters-container {
         display: flex;
         position: relative;
         flex-direction: row;
+        width: 100%;
         justify-content: space-evenly;
         align-items: center;
+        margin: 20px 0px 10px 0px;
 
         .filter {
           display: flex;
@@ -357,151 +406,23 @@
     .hide-search-filters {
       display: flex;
       position: relative;
-      flex-direction: row;
-      justify-content: space-evenly;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
       width: 100%;
-      height: 100px;
-      transition: 0.5s ease-in-out;
-      transform: translate(0%, -100%);
-
-      .search-container {
-        display: flex;
-        position: relative;
-        justify-content: space-evenly;
-        align-items: center;
-
-        .search-box {
-          display: flex;
-          position: relative;
-          width: 400px;
-          border-radius: 5px;
-          border: rgba(94, 23, 66, 0.9);
-          border-style: solid;
-          border-width: 1.5px;
-          // box-shadow: #5e1742 0px 0px 5px, #5e1742 0px 0px 10px,
-          //   #5e1742 0px 0px 15px, #5e1742 0px 0px 20px, #5e1742 0px 0px 30px,
-          //   #5e1742 0px 0px 40px;
-
-          .home-search-input {
-            display: flex;
-            position: relative;
-            width: 320px;
-            z-index: 2;
-            outline: none;
-            cursor: text;
-            border-style: none;
-            background-color: rgb(150, 117, 122);
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 20px;
-            color: rgb(246, 206, 143);
-            text-align: center;
-          }
-
-          .home-search-input::placeholder {
-            font-family: 'Open Sans', sans-serif;
-            color: rgb(246, 206, 143);
-          }
-
-          .homeSearchBtn {
-            display: flex;
-            position: relative;
-            z-index: 4;
-            border-style: outset;
-            border-width: 1.5px;
-            border-color: rgb(246, 206, 143);
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            outline: none;
-            width: 80px;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 20px;
-            text-align: center;
-            background-color: rgb(94, 23, 66);
-            color: rgb(246, 206, 143);
-            cursor: pointer;
-          }
-
-          .homeSearchBtn:active {
-            border-style: inset;
-          }
-        }
-
-        .showCitiesDropDown {
-          display: flex;
-          position: relative;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          justify-content: flex-start;
-          flex-wrap: nowrap;
-          max-height: 340px;
-          overflow: scroll;
-
-          .suggestionList {
-            .inactiveSuggestion {
-              background: rgb(150, 117, 122);
-              color: rgb(246, 206, 143);
-              list-style: none;
-              border-bottom: 1px solid #d8d8d823;
-              box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-              width: 100%;
-              margin: 0;
-              padding: 12px 20px;
-              transition: 0.2s;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              text-transform: capitalize;
-              cursor: pointer;
-
-              p {
-                font-family: 'Open Sans', sans-serif;
-                font-size: 20px;
-                width: 450px;
-                text-align: center;
-              }
-            }
-
-            .activeSuggestion {
-              background: rgb(246, 206, 143);
-              color: rgb(150, 117, 122);
-              list-style: none;
-              border-bottom: 1px solid #d8d8d823;
-              box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-              width: 100%;
-              margin: 0;
-              padding: 15px 20px;
-              transition: 0.2s;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              text-transform: capitalize;
-              cursor: pointer;
-
-              p {
-                font-family: 'Open Sans', sans-serif;
-                font-size: 20px;
-                width: 450px;
-                text-align: center;
-              }
-            }
-          }
-        }
-
-        .hideCitiesDropDown {
-          display: none;
-        }
-      }
+      background-color: rgb(94, 23, 66);
+      box-shadow: #5e1742 0px 0px 0px 0px, #5e1742 0px 0px 10px 10px;
+      transition: 1s ease-in-out;
+      transform: translate(0%, -75%);
 
       .filters-container {
         display: flex;
         position: relative;
+        width: 100%;
         flex-direction: row;
         justify-content: space-evenly;
         align-items: center;
+        margin: 20px 0px 10px 0px;
 
         .filter {
           display: flex;
@@ -577,7 +498,7 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 100%;
-    margin: 10px 0px;
+    margin: 60px 0px;
 
     .event-details-navlink {
       display: flex;

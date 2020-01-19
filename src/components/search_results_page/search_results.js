@@ -253,6 +253,8 @@ class search_results extends Component {
     const eventsList =
       this.props.events &&
       this.props.events._embedded.events.map(e => {
+        // console.log('***Events : ', this.props.events);
+
         return (
           <NavLink
             to={`/event/${e.id}`}
@@ -287,12 +289,8 @@ class search_results extends Component {
             </p>
           </div>
         </div>
-        <div className='search-filters-container'>
-          <div
-            className={
-              showFilters ? 'show-search-filters' : 'hide-search-filters'
-            }
-          >
+        <div className='search-filters-main-container'>
+          <div className='search-filters-btn-container'>
             <div className='search-container'>
               <div className='search-box'>
                 <input
@@ -319,6 +317,20 @@ class search_results extends Component {
                 <ul className='suggestionList'>{citySuggestions}</ul>
               </div>
             </div>
+            <div className='filters-drpdwn-btn-container'>
+              <button
+                className='filters-drpdwn-btn'
+                onClick={this.toggleFilters}
+              >
+                {showFilters ? 'CLOSE FILTERS' : 'OPEN FILTERS'}
+              </button>
+            </div>
+          </div>
+          <div
+            className={
+              showFilters ? 'show-search-filters' : 'hide-search-filters'
+            }
+          >
             <div className='filters-container'>
               <div className={'filter'}>
                 <h2>Start Date</h2>
@@ -385,14 +397,6 @@ class search_results extends Component {
                 <p>Filter Results</p>
               </div>
             </div>
-          </div>
-          <div className='filters-dropdown-btn-container'>
-            <button
-              className='filters-dropdown-btn'
-              onClick={this.toggleFilters}
-            >
-              Filters
-            </button>
           </div>
         </div>
         <div className='events-list'>
