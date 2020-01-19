@@ -10,7 +10,7 @@ class SingleResult extends Component {
   render() {
     const { event } = this.props;
 
-    console.log('***Event Info : ', event);
+    // console.log('***Event Info : ', event);
 
     let splitEventName = event.name
       .replace(/ [(]/g, ',')

@@ -12,7 +12,7 @@ class search_results extends Component {
     super(props);
     this.state = {
       loading: true,
-      city: this.props.city,
+      currentCity: '',
       showFilters: true,
       startDateTime: null,
       endDateTime: null,
@@ -29,12 +29,12 @@ class search_results extends Component {
     this.setSearchInput = this.setSearchInput.bind(this);
     this.searchEvents = this.searchEvents.bind(this);
     this.getCitySuggestions = this.getCitySuggestions.bind(this);
-    // this.goToSearchResults = this.goToSearchResults.bind(this);
     this.updateSearchInput = this.updateSearchInput.bind(this);
     this.hoveredCity = this.hoveredCity.bind(this);
     this.selectCity = this.selectCity.bind(this);
     this.toggleWarningModal = this.toggleWarningModal.bind(this);
     this.toggleFilters = this.toggleFilters.bind(this);
+    this.toggleSearch = this.toggleSearch.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +58,7 @@ class search_results extends Component {
 
     this.setState(
       {
+        currentCity: params.location,
         searchInput: params.location,
         formatedCityName: urlCityName
       },
@@ -118,7 +119,7 @@ class search_results extends Component {
           // console.log('getCitySuggestions--enterKey-localState: ', this.state)
         );
       } else {
-        this.goToSearchResults();
+        this.searchEvents();
       }
     } else if (keyPressed === 38 && cursorPosition > 0) {
       this.setState(prevState => ({
@@ -150,6 +151,7 @@ class search_results extends Component {
             //   'getCitySuggestions--ticketmasterCities--res.data',
             //   res.data.locations
             // );
+
             this.setState({
               filteredCities: res.data.locations,
               showSuggestedCities: true
@@ -216,10 +218,17 @@ class search_results extends Component {
   }
 
   toggleFilters() {
-    console.log('***Show Filters : ', this.state.showFilters);
+    // console.log('***Show Filters : ', this.state.showFilters);
 
     this.setState({
       showFilters: !this.state.showFilters
+    });
+  }
+
+  toggleSearch() {
+    this.setState({
+      searchInput: this.state.currentCity,
+      showSuggestedCities: false
     });
   }
 
@@ -291,30 +300,37 @@ class search_results extends Component {
         </div>
         <div className='search-filters-main-container'>
           <div className='search-filters-btn-container'>
-            <div className='search-container'>
-              <div className='search-box'>
-                <input
-                  className='home-search-input'
-                  placeholder='Search by City or State'
-                  onChange={this.updateSearchInput}
-                  onKeyUp={this.getCitySuggestions}
-                  value={searchInput}
-                />
-                <button
-                  className='homeSearchBtn'
-                  onClick={this.goToSearchResults}
+            <div
+              className={
+                showSuggestedCities
+                  ? 'showSearchingBackground'
+                  : 'hideSearchingBackground'
+              }
+              onClick={this.toggleSearch}
+            ></div>
+            <div className='search-main-container'>
+              <div className='search-container'>
+                <div className='search-box'>
+                  <input
+                    className='home-search-input'
+                    placeholder='Search by City or State'
+                    onChange={this.updateSearchInput}
+                    onKeyUp={this.getCitySuggestions}
+                    value={searchInput}
+                  />
+                  <button className='homeSearchBtn' onClick={this.searchEvents}>
+                    Search
+                  </button>
+                </div>
+                <div
+                  className={
+                    showSuggestedCities
+                      ? 'showCitiesDropDown'
+                      : 'hideCitiesDropDown'
+                  }
                 >
-                  Search
-                </button>
-              </div>
-              <div
-                className={
-                  showSuggestedCities
-                    ? 'showCitiesDropDown'
-                    : 'hideCitiesDropDown'
-                }
-              >
-                <ul className='suggestionList'>{citySuggestions}</ul>
+                  <ul className='suggestionList'>{citySuggestions}</ul>
+                </div>
               </div>
             </div>
             <div className='filters-drpdwn-btn-container'>

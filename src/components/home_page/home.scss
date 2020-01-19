@@ -125,7 +125,6 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     justify-content: flex-start;
     top: 18px;
@@ -157,6 +156,11 @@
           width: 450px;
           text-align: center;
         }
+      }
+
+      .inactiveSuggestion:last-child {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
       }
 
       .activeSuggestion {
