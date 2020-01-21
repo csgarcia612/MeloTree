@@ -12,7 +12,7 @@ class search_results extends Component {
     this.state = {
       loading: true,
       currentCity: '',
-      showFilters: true,
+      showFilters: false,
       startDate: '',
       startTime: '',
       endDate: '',
@@ -33,6 +33,7 @@ class search_results extends Component {
     this.updateSearchInput = this.updateSearchInput.bind(this);
     this.hoveredCity = this.hoveredCity.bind(this);
     this.selectCity = this.selectCity.bind(this);
+    this.goToSearchResults = this.goToSearchResults.bind(this);
     this.updateFilters = this.updateFilters.bind(this);
     this.resetFilters = this.resetFilters.bind(this);
     this.toggleWarningModal = this.toggleWarningModal.bind(this);
@@ -193,14 +194,14 @@ class search_results extends Component {
           // console.log('getCitySuggestions--enterKey-localState: ', this.state)
         );
       } else {
-        this.searchEvents();
+        this.goToSearchResults();
       }
     } else if (keyPressed === 38 && cursorPosition > 0) {
       this.setState(prevState => ({
         cursorPosition: prevState.cursorPosition - 1
       }));
       // console.log('cursorPosition: ', cursorPosition);
-      console.log('***filteredCitiesArr: ', filteredCities);
+      // console.log('***filteredCitiesArr: ', filteredCities);
     } else if (
       keyPressed === 40 &&
       cursorPosition < filteredCities.length - 1
@@ -285,6 +286,18 @@ class search_results extends Component {
     });
 
     // console.log('newState: ', this.state);
+  }
+
+  goToSearchResults() {
+    const { searchInput } = this.state;
+    let validCharacters = /[-.'a-z ]/gi;
+
+    if (!searchInput || !validCharacters.test(searchInput)) {
+      this.toggleWarningModal();
+    } else {
+      this.props.history.push(`/search/${this.state.searchInput}`);
+      this.searchEvents();
+    }
   }
 
   updateFilters(event) {
@@ -605,7 +618,10 @@ class search_results extends Component {
                     onKeyUp={this.getCitySuggestions}
                     value={searchInput}
                   />
-                  <button className='homeSearchBtn' onClick={this.searchEvents}>
+                  <button
+                    className='homeSearchBtn'
+                    onClick={this.goToSearchResults}
+                  >
                     Search
                   </button>
                 </div>
@@ -753,7 +769,7 @@ class search_results extends Component {
           {eventsList ? (
             eventsList
           ) : (
-            <p className='no-results-msg'>No Results</p>
+            <p className='no-results-msg'>No Events Found</p>
           )}
         </div>
       </div>

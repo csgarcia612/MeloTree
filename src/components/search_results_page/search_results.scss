@@ -168,7 +168,12 @@
 
             .homeSearchBtn:active {
               border-style: inset;
+              background-color: rgb(150, 117, 122);
             }
+          }
+
+          .search-box:hover {
+            box-shadow: #f6ce8f 0px 0px 0px 0px, #f6ce8f 0px 0px 2.5px 2.5px;
           }
 
           .showCitiesDropDown {
@@ -278,8 +283,13 @@
           cursor: pointer;
         }
 
+        .filters-drpdwn-btn:hover {
+          box-shadow: #f6ce8f 0px 0px 0px 0px, #f6ce8f 0px 0px 2.5px 2.5px;
+        }
+
         .filters-drpdwn-btn:active {
           border-style: inset;
+          background-color: rgb(150, 117, 122);
         }
       }
     }
@@ -295,6 +305,187 @@
       box-shadow: #5e1742 0px 0px 0px 0px, #5e1742 0px 0px 10px 10px;
       transition: 1s ease-in-out;
       transform: translate(0%, 50%);
+
+      .filters-main-container {
+        display: flex;
+        position: relative;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        margin: 20px 0px 10px 0px;
+        padding: 0px 10px;
+
+        .single-filter-container {
+          .filter-title-container {
+            .filter-title {
+              display: flex;
+              position: relative;
+              justify-content: center;
+              color: rgb(246, 206, 143);
+              font-family: 'Open Sans', sans-serif;
+              font-size: 20px;
+            }
+          }
+
+          .filter-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            border: rgba(94, 23, 66, 0.9);
+            border-style: solid;
+            border-width: 1.5px;
+
+            input,
+            select,
+            option {
+              display: flex;
+              position: relative;
+              justify-content: center;
+              align-items: center;
+              margin: 5px;
+              background-color: rgb(150, 117, 122);
+              color: rgb(246, 206, 143);
+              border-style: solid;
+              border-width: 1.5px;
+              border-radius: 5px;
+              border-color: rgb(246, 206, 143);
+              font-family: 'Open Sans', sans-serif;
+              font-size: 18px;
+              text-decoration: none;
+              text-align: center;
+              outline: none;
+              cursor: pointer;
+              -webkit-user-select: none;
+              user-select: none;
+            }
+
+            input[type='date']:hover {
+              box-shadow: #f6ce8f 0px 0px 0px 0px, #f6ce8f 0px 0px 2.5px 2.5px;
+            }
+
+            input[type='date']:focus {
+              box-shadow: #f6ce8f 0px 0px 0px 0px, #f6ce8f 0px 0px 2.5px 2.5px;
+            }
+
+            select:hover {
+              box-shadow: #f6ce8f 0px 0px 0px 0px, #f6ce8f 0px 0px 2.5px 2.5px;
+            }
+
+            select:focus {
+              box-shadow: #f6ce8f 0px 0px 0px 0px, #f6ce8f 0px 0px 2.5px 2.5px;
+            }
+
+            input::-webkit-inner-spin-button {
+              display: none;
+              -webkit-appearance: none;
+            }
+
+            input::-webkit-calendar-picker-indicator {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              width: auto;
+              height: auto;
+              color: transparent;
+              background: transparent;
+              cursor: pointer;
+            }
+
+            input::-webkit-datetime-edit-day-field:focus,
+            input::-webkit-datetime-edit-month-field:focus,
+            input::-webkit-datetime-edit-year-field:focus {
+              background-color: transparent;
+              color: rgb(246, 206, 143);
+            }
+          }
+        }
+
+        .filter-results-btn-container {
+          display: flex;
+          position: relative;
+          flex-direction: row;
+          // justify-content: space-evenly;
+          align-items: center;
+
+          .reset-filters-btn {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            border-style: outset;
+            border-width: 1.5px;
+            border-color: white;
+            border-radius: 5px;
+            outline: none;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: red;
+            color: black;
+            cursor: pointer;
+            margin-right: 15px;
+          }
+
+          .reset-filters-btn:hover {
+            box-shadow: #f6ce8f 0px 0px 0px 0px, #f6ce8f 0px 0px 2.5px 2.5px;
+          }
+
+          .reset-filters-btn:active {
+            border-style: inset;
+            background-color: black;
+            color: red;
+          }
+
+          .filter-results-btn {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            border-style: outset;
+            border-width: 1.5px;
+            // border-color: rgb(246, 206, 143);
+            border-color: white;
+            border-radius: 5px;
+            outline: none;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            // background-color: rgb(94, 23, 66);
+            background-color: green;
+            color: white;
+            // color: rgb(246, 206, 143);
+            cursor: pointer;
+            margin-left: 15px;
+          }
+
+          .filter-results-btn:hover {
+            box-shadow: #f6ce8f 0px 0px 0px 0px, #f6ce8f 0px 0px 2.5px 2.5px;
+          }
+
+          .filter-results-btn:active {
+            border-style: inset;
+            border-color: black;
+            background-color: white;
+            color: green;
+          }
+        }
+      }
+    }
+    .hide-search-filters {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      background-color: rgb(94, 23, 66);
+      box-shadow: #5e1742 0px 0px 0px 0px, #5e1742 0px 0px 10px 10px;
+      transition: 1s ease-in-out;
+      transform: translate(0%, -75%);
 
       .filters-main-container {
         display: flex;
@@ -392,19 +583,22 @@
             align-items: center;
             border-style: outset;
             border-width: 1.5px;
-            // border-color: rgb(246, 206, 143);
             border-color: white;
             border-radius: 5px;
             outline: none;
             font-family: 'Open Sans', sans-serif;
             font-size: 20px;
             font-weight: bold;
-            // background-color: rgb(94, 23, 66);
             background-color: red;
             color: black;
-            // color: rgb(246, 206, 143);
             cursor: pointer;
             margin-right: 15px;
+          }
+
+          .reset-filters-btn:active {
+            border-style: inset;
+            background-color: black;
+            color: red;
           }
 
           .filter-results-btn {
@@ -428,93 +622,13 @@
             cursor: pointer;
             margin-left: 15px;
           }
-        }
-      }
-    }
 
-    .hide-search-filters {
-      display: flex;
-      position: relative;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      background-color: rgb(94, 23, 66);
-      box-shadow: #5e1742 0px 0px 0px 0px, #5e1742 0px 0px 10px 10px;
-      transition: 1s ease-in-out;
-      transform: translate(0%, -75%);
-
-      .filters-container {
-        display: flex;
-        position: relative;
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        margin: 20px 0px 10px 0px;
-
-        .filter {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          color: rgb(246, 206, 143);
-          background-color: rgb(150, 117, 122);
-          margin: 5px;
-          font-family: sans-serif;
-          font-size: 20px;
-          // height: 35px;
-          border-radius: 5px;
-          border: rgba(94, 23, 66, 0.9);
-          border-style: solid;
-          border-width: 1.5px;
-
-          input,
-          select,
-          option {
-            background-color: transparent;
-            color: rgb(246, 206, 143);
-            border: none;
-            // height: 15vh;
-            // width: 11vw;
-            text-align: center;
+          .filter-results-btn:active {
+            border-style: inset;
+            border-color: black;
+            background-color: white;
+            color: green;
           }
-
-          input {
-            background-color: transparent;
-            border: none;
-            font-family: sans-serif;
-            font-size: 16px;
-            color: rgb(246, 206, 143);
-          }
-          input::-webkit-inner-spin-button {
-            display: none;
-            -webkit-appearance: none;
-          }
-          input::-webkit-calendar-picker-indicator {
-            font-size: 18px;
-          }
-          // .input-field {
-          // 	background-color: white;
-          // }
-          input:focus,
-          select:focus,
-          option:focus {
-            outline: none;
-          }
-          .input-field {
-            width: 350px;
-            font-size: 32px;
-          }
-          p {
-            font-size: 24px;
-            padding: 10px;
-            cursor: pointer;
-          }
-        }
-        .filter:hover {
-          transition: 0.5s;
-          border: solid 5px rgb(246, 206, 143);
         }
       }
     }
@@ -527,12 +641,24 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 100%;
+    min-height: 75vh;
     margin: 70px 0px 15px 0px;
 
     .event-details-navlink {
       display: flex;
       position: relative;
       margin: 10px 0px;
+    }
+
+    .no-results-msg {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      color: rgb(94, 23, 66);
     }
   }
 
