@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import './search_results.scss';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
-import { setEvents, setCity, getCities } from '../../dux/reducer';
+import { setEvents } from '../../dux/reducer';
 import SingleResult from '../single_search_result/single_result';
-// import arrow from './icons8-sort-down-24.png';
 
 class search_results extends Component {
   constructor(props) {
@@ -14,12 +13,14 @@ class search_results extends Component {
       loading: true,
       currentCity: '',
       showFilters: true,
-      startDateTime: null,
-      endDateTime: null,
-      radius: 50,
+      startDate: '',
+      startTime: '',
+      endDate: '',
+      endTime: 'T23:59:59',
+      radius: '25',
+      genreName: 'All Genres',
       genreId:
-        'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF',
-      filteredLocations: null,
+        'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAJ6,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF',
       searchInput: '',
       formatedCityName: '',
       filteredCities: [],
@@ -32,6 +33,8 @@ class search_results extends Component {
     this.updateSearchInput = this.updateSearchInput.bind(this);
     this.hoveredCity = this.hoveredCity.bind(this);
     this.selectCity = this.selectCity.bind(this);
+    this.updateFilters = this.updateFilters.bind(this);
+    this.resetFilters = this.resetFilters.bind(this);
     this.toggleWarningModal = this.toggleWarningModal.bind(this);
     this.toggleFilters = this.toggleFilters.bind(this);
     this.toggleSearch = this.toggleSearch.bind(this);
@@ -56,27 +59,98 @@ class search_results extends Component {
 
     // console.log('urlCityName--', urlCityName);
 
+    let today = new Date();
+
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let seconds = today.getSeconds();
+
+    if (month < 10) {
+      month = '0' + month;
+    }
+
+    if (day < 10) {
+      day = '0' + day;
+    }
+
+    if (hours < 10) {
+      hours = '0' + hours;
+    }
+
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    }
+
+    // console.log(
+    //   '***Current Date-Time : ',
+    //   `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`
+    // );
+
+    let currentDate = `${year}-${month}-${day}`;
+
+    let currentTime = `T${hours}:${minutes}:${seconds}`;
+
+    today.setDate(today.getDate() + 15);
+
+    year = today.getFullYear();
+    month = today.getMonth() + 1;
+    day = today.getDate();
+
+    if (month < 10) {
+      month = '0' + month;
+    }
+
+    if (day < 10) {
+      day = '0' + day;
+    }
+
+    // console.log('***Future Date-Time : ', `${year}-${month}-${day}T23:59:59`);
+
+    let endDate = `${year}-${month}-${day}`;
+
     this.setState(
       {
         currentCity: params.location,
+        startDate: currentDate,
+        startTime: currentTime,
+        endDate: endDate,
         searchInput: params.location,
         formatedCityName: urlCityName
       },
       // () => console.log('searchState-After--', this.state)
+
       () => this.searchEvents()
     );
   }
 
   searchEvents() {
-    const { radius, formatedCityName } = this.state;
+    const {
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      radius,
+      genreId,
+      formatedCityName
+    } = this.state;
+
     // console.log('searchEvents-formattedCityName---', formatedCityName);
+
     formatedCityName &&
       axios
         .get(
-          `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=eIMh2CGNhtUTSybN21TU3JRes1j9raV3&radius=${radius}&sort=date,asc&classificationName=[music]&unit=miles&city=${formatedCityName}`
+          `https://app.ticketmaster.com/discovery/v2/events.json?apikey=eIMh2CGNhtUTSybN21TU3JRes1j9raV3&radius=${radius}&unit=miles&localStartEndDateTime=${startDate}${startTime},${endDate}${endTime}&includeDateRange=true&size=20&page=0&sort=date,asc&city=${formatedCityName}&countryCode=US&classificationName=[music]&includeFamily=no&genreId=${genreId}`
         )
         .then(res => {
           // console.log('res.data in searchquery response', res.data);
+
           if (res.data.page.totalElements === 0) {
             this.props.setEvents(null);
           } else {
@@ -181,7 +255,9 @@ class search_results extends Component {
       searchInput: event.target.value
     });
     // console.log('***searchInput:', this.state.searchInput);
+
     // ** Don't use Vanilla JavaScript here. The below code makes the event persist and without unmounting it continued to search the initial city name instead of searching the new input. The 'onKeyUp' attribute on the input field can fire the city drop down function instead of putting it on the 'event listener'. **
+
     // document.addEventListener('keyup', this.getCitySuggestions);
   }
 
@@ -211,6 +287,222 @@ class search_results extends Component {
     // console.log('newState: ', this.state);
   }
 
+  updateFilters(event) {
+    // console.log('***Current Filter Values : ', {
+    //   startDate: this.state.startDate,
+    //   startTime: this.state.startTime,
+    //   endDate: this.state.endDate,
+    //   endTime: this.state.endTime,
+    //   radius: this.state.radius,
+    //   genreName: this.state.genreName,
+    //   genreId: this.state.genreId
+    // });
+
+    let genreCode =
+      'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAJ6,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF';
+
+    if (event.target.name === 'genreName') {
+      if (event.target.value === 'Alternative') {
+        genreCode = 'KnvZfZ7vAvv';
+      } else if (event.target.value === 'Ballads/Romantic') {
+        genreCode = 'KnvZfZ7vAve';
+      } else if (event.target.value === 'Blues') {
+        genreCode = 'KnvZfZ7vAvd';
+      } else if (event.target.value === 'Chanson Francaise') {
+        genreCode = 'KnvZfZ7vAvA';
+      } else if (event.target.value === "Children's Music") {
+        genreCode = 'KnvZfZ7vAvk';
+      } else if (event.target.value === 'Classical') {
+        genreCode = 'KnvZfZ7vAeJ';
+      } else if (event.target.value === 'Country') {
+        genreCode = 'KnvZfZ7vAv6';
+      } else if (event.target.value === 'Dance/Electronic') {
+        genreCode = 'KnvZfZ7vAvF';
+      } else if (event.target.value === 'Folk') {
+        genreCode = 'KnvZfZ7vAva';
+      } else if (event.target.value === 'Hip-Hop/Rap') {
+        genreCode = 'KnvZfZ7vAv1';
+      } else if (event.target.value === 'Holiday') {
+        genreCode = 'KnvZfZ7vAvJ';
+      } else if (event.target.value === 'Jazz') {
+        genreCode = 'KnvZfZ7vAvE';
+      } else if (event.target.value === 'Latin') {
+        genreCode = 'KnvZfZ7vAJ6';
+      } else if (event.target.value === 'Medieval/Renaissance') {
+        genreCode = 'KnvZfZ7vAvI';
+      } else if (event.target.value === 'Metal') {
+        genreCode = 'KnvZfZ7vAvt';
+      } else if (event.target.value === 'New Age') {
+        genreCode = 'KnvZfZ7vAvn';
+      } else if (event.target.value === 'Other') {
+        genreCode = 'KnvZfZ7vAvl';
+      } else if (event.target.value === 'Pop') {
+        genreCode = 'KnvZfZ7vAev';
+      } else if (event.target.value === 'R&B') {
+        genreCode = 'KnvZfZ7vAee';
+      } else if (event.target.value === 'Reggae') {
+        genreCode = 'KnvZfZ7vAed';
+      } else if (event.target.value === 'Religious') {
+        genreCode = 'KnvZfZ7vAe7';
+      } else if (event.target.value === 'Rock') {
+        genreCode = 'KnvZfZ7vAeA';
+      } else if (event.target.value === 'World') {
+        genreCode = 'KnvZfZ7vAeF';
+      }
+    }
+
+    let today = new Date();
+
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let seconds = today.getSeconds();
+
+    if (month < 10) {
+      month = '0' + month;
+    }
+
+    if (day < 10) {
+      day = '0' + day;
+    }
+
+    if (hours < 10) {
+      hours = '0' + hours;
+    }
+
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    }
+
+    let currentDate = `${year}-${month}-${day}`;
+
+    let currentTime = `T${hours}:${minutes}:${seconds}`;
+
+    if (event.target.name === 'startDate') {
+      if (event.target.value !== currentDate) {
+        currentTime = 'T00:00:00';
+      }
+    }
+
+    this.setState(
+      {
+        [event.target.name]: event.target.value,
+        startTime: currentTime,
+        genreId: genreCode
+      }
+      // ,
+      // () => {
+      //   console.log('***New Filter Values : ', {
+      //     startDate: this.state.startDate,
+      //     startTime: this.state.startTime,
+      //     endDate: this.state.endDate,
+      //     endTime: this.state.endTime,
+      //     radius: this.state.radius,
+      //     genreName: this.state.genreName,
+      //     genreId: this.state.genreId
+      //   });
+      // }
+    );
+  }
+
+  resetFilters() {
+    // console.log('***Current Filter Values : ', {
+    //   startDate: this.state.startDate,
+    //   startTime: this.state.startTime,
+    //   endDate: this.state.endDate,
+    //   endTime: this.state.endTime,
+    //   radius: this.state.radius,
+    //   genreName: this.state.genreName,
+    //   genreId: this.state.genreId
+    // });
+
+    let today = new Date();
+
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let seconds = today.getSeconds();
+
+    if (month < 10) {
+      month = '0' + month;
+    }
+
+    if (day < 10) {
+      day = '0' + day;
+    }
+
+    if (hours < 10) {
+      hours = '0' + hours;
+    }
+
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    }
+
+    // console.log(
+    //   '***Current Date-Time : ',
+    //   `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`
+    // );
+
+    let currentDate = `${year}-${month}-${day}`;
+
+    let currentTime = `T${hours}:${minutes}:${seconds}`;
+
+    today.setDate(today.getDate() + 15);
+
+    year = today.getFullYear();
+    month = today.getMonth() + 1;
+    day = today.getDate();
+
+    if (month < 10) {
+      month = '0' + month;
+    }
+
+    if (day < 10) {
+      day = '0' + day;
+    }
+
+    // console.log('***Future Date-Time : ', `${year}-${month}-${day}T23:59:59`);
+
+    let endDate = `${year}-${month}-${day}`;
+
+    this.setState(
+      {
+        startDate: currentDate,
+        startTime: currentTime,
+        endDate: endDate,
+        radius: 25,
+        genreName: 'All Genres',
+        genreId:
+          'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAJ6,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF'
+      }
+      // ,
+      // () => {
+      //   console.log('***New Filter Values : ', {
+      //     startDate: this.state.startDate,
+      //     startTime: this.state.startTime,
+      //     endDate: this.state.endDate,
+      //     endTime: this.state.endTime,
+      //     radius: this.state.radius,
+      //     genreName: this.state.genreName,
+      //     genreId: this.state.genreId
+      //   });
+      // }
+    );
+  }
+
   toggleWarningModal() {
     this.setState({
       showWarningModal: !this.state.showWarningModal
@@ -234,6 +526,10 @@ class search_results extends Component {
 
   render() {
     const {
+      startDate,
+      endDate,
+      radius,
+      genreName,
       filteredCities,
       searchInput,
       cursorPosition,
@@ -276,18 +572,9 @@ class search_results extends Component {
         );
       });
     // console.log("state", this.state);
+
     return (
       <div className='search-results-container'>
-        {/* <div className='dropdown-menu'>
-						{this.state.filteredLocations && searchDropDown}
-					</div>
-					<p className='search-filter-title'>Search Filters</p>
-					<img
-						src={arrow}
-						alt='arrow'
-						onClick={() => this.handleFilterToggle(initialState)}
-						className={this.state.filterToggle ? 'buttonOn' : 'buttonOff'}
-					/> */}
         <div
           className={showWarningModal ? 'showWarningModal' : 'hideWarningModal'}
           onClick={this.toggleWarningModal}
@@ -347,78 +634,128 @@ class search_results extends Component {
               showFilters ? 'show-search-filters' : 'hide-search-filters'
             }
           >
-            <div className='filters-container'>
-              <div className={'filter'}>
-                <h2>Start Date</h2>
-                {/* <input
-              name='startDateTime'
-              type='date'
-              onChange={e => this.handleUserInput(e)}
-            /> */}
+            <div className='filters-main-container'>
+              <div className={'single-filter-container'}>
+                <div className='filter-title-container'>
+                  <p className='filter-title'>Start Date</p>
+                </div>
+                <span className='filterSpan' />
+                <div className='filter-container'>
+                  <input
+                    name='startDate'
+                    type='date'
+                    required='required'
+                    value={startDate}
+                    min={startDate}
+                    onChange={e => this.updateFilters(e)}
+                  />
+                </div>
               </div>
-              <div className={'filter'}>
-                <h2>End Date</h2>
-                {/* <input
-              name='endDateTime'
-              type='date'
-              onChange={e => this.handleUserInput(e)}
-            /> */}
+              <div className={'single-filter-container'}>
+                <div className='filter-title-container'>
+                  <p className='filter-title'>End Date</p>
+                </div>
+                <span className='filterSpan' />
+                <div className='filter-container'>
+                  <input
+                    name='endDate'
+                    type='date'
+                    required='required'
+                    value={endDate}
+                    min={startDate}
+                    onChange={e => this.updateFilters(e)}
+                  />
+                </div>
               </div>
-              <div className={'filter'}>
-                <h2>Distance</h2>
-                {/* <input
-              type='number'
-              name='radius'
-              min='10'
-              max='100'
-              step='10'
-              value={this.state.radius}
-              onChange={e => this.handleUserInput(e)}
-            /> */}
+              <div className={'single-filter-container'}>
+                <div className='filter-title-container'>
+                  <p className='filter-title'>Distance (Miles)</p>
+                </div>
+                <span className='filterSpan' />
+                <div className='filter-container'>
+                  <select
+                    name='radius'
+                    value={radius}
+                    onChange={e => this.updateFilters(e)}
+                  >
+                    <option value='5'>5</option>
+                    <option value='10'>10</option>
+                    <option value='15'>15</option>
+                    <option value='25'>25</option>
+                    <option value='50'>50</option>
+                    <option value='75'>75</option>
+                    <option value='100'>100</option>
+                  </select>
+                </div>
               </div>
-              <div className={'filter'}>
-                <h2>Genre</h2>
-                {/* <select name='genreId' onChange={e => this.handleUserInput(e)}>
-              <option value='KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF'>
-                All Genres
-              </option>
-              <option value='KnvZfZ7vAvv'>Alternative</option>
-              <option value='KnvZfZ7vAve'>Romantic</option>
-              <option value='KnvZfZ7vAvd'>Blues</option>
-              <option value='KnvZfZ7vAvA'>Chanson</option>
-              <option value='KnvZfZ7vAvk'>Children</option>
-              <option value='KnvZfZ7vAeJ'>Classical</option>
-              <option value='KnvZfZ7vAv6'>Country</option>
-              <option value='KnvZfZ7vAvF'>EDM</option>
-              <option value='KnvZfZ7vAva'>Folk</option>
-              <option value='KnvZfZ7vAv1'>Hip Hop/Rap</option>
-              <option value='KnvZfZ7vAvJ'>Holiday</option>
-              <option value='KnvZfZ7vAvE'>Jazz</option>
-              <option value='KnvZfZ7vAvI'>Medieval</option>
-              <option value='KnvZfZ7vAvt'>Metal</option>
-              <option value='KnvZfZ7vAvn'>New Age</option>
-              <option value='KnvZfZ7vAev'>Pop</option>
-              <option value='KnvZfZ7vAee'>R & B</option>
-              <option value='KnvZfZ7vAed'>Reggae</option>
-              <option value='KnvZfZ7vAe7'>Religious</option>
-              <option value='KnvZfZ7vAeA'>Rock</option>
-              <option value='KnvZfZ7vAeF'>World</option>
-            </select> */}
+              <div className={'single-filter-container'}>
+                <div className='filter-title-container'>
+                  <p className='filter-title'>Genre</p>
+                </div>
+                <span className='filterSpan' />
+                <div className='filter-container'>
+                  <select
+                    name='genreName'
+                    value={genreName}
+                    onChange={e => this.updateFilters(e)}
+                  >
+                    <option value='All Genres'>All Genres</option>
+                    <option value='Alternative'>Alternative</option>
+                    <option value='Ballads / Romantic'>
+                      Ballads / Romantic
+                    </option>
+                    <option value='Blues'>Blues</option>
+                    <option value='Chanson Francaise'>Chanson Francaise</option>
+                    <option value="Children's Music">Children's Music</option>
+                    <option value='Classical'>Classical</option>
+                    <option value='Country'>Country</option>
+                    <option value='Dance / Electronic'>
+                      Dance / Electronic
+                    </option>
+                    <option value='Folk'>Folk</option>
+                    <option value='Hip-Hop / Rap'>Hip-Hop / Rap</option>
+                    <option value='Holiday'>Holiday</option>
+                    <option value='Jazz'>Jazz</option>
+                    <option value='Latin'>Latin</option>
+                    <option value='Medieval / Renaissance'>
+                      Medieval / Renaissance
+                    </option>
+                    <option value='Metal'>Metal</option>
+                    <option value='New Age'>New Age</option>
+                    <option value='Other'>Other</option>
+                    <option value='Pop'>Pop</option>
+                    <option value='R&B'>R&B</option>
+                    <option value='Reggae'>Reggae</option>
+                    <option value='Religious'>Religious</option>
+                    <option value='Rock'>Rock</option>
+                    <option value='World'>World</option>
+                  </select>
+                </div>
               </div>
-              <div className={'filter'} onClick={this.handleSearch}>
-                {/* <button onClick={() => this.setState({ ...initialState })}>
-							Clear
-						</button> */}
-                {/* <button >Search</button> */}
-                <p>Filter Results</p>
+              <div className={'filter-results-btn-container'}>
+                <button
+                  className='reset-filters-btn'
+                  onClick={this.resetFilters}
+                >
+                  Reset Filters
+                </button>
+                <button
+                  className='filter-results-btn'
+                  onClick={this.searchEvents}
+                >
+                  Filter Events
+                </button>
               </div>
             </div>
           </div>
         </div>
         <div className='events-list'>
-          {eventsList ? eventsList : <h1>No Results</h1>}
+          {eventsList ? (
+            eventsList
+          ) : (
+            <p className='no-results-msg'>No Results</p>
+          )}
         </div>
-        {/* <img className={this.state.loading ? 'loading' : 'loaded'} src='https://media.giphy.com/media/7FfMfPHQr9romeeKtk/giphy.gif' alt='loading'/> */}
       </div>
     );
   }
@@ -432,6 +769,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { setEvents, setCity, getCities })(
-  search_results
-);
+export default connect(mapStateToProps, { setEvents })(search_results);

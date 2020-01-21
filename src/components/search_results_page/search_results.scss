@@ -1,3 +1,13 @@
+::-webkit-scrollbar {
+  width: 0px; /* remove scrollbar space */
+  background: transparent; /* optional: just make scrollbar invisible */
+}
+
+/* optional: show position indicator in red */
+// ::-webkit-scrollbar-thumb {
+//   background: rgb(255, 0, 0);
+// }
+
 .search-results-container {
   display: flex;
   position: relative;
@@ -109,11 +119,17 @@
             .home-search-input {
               display: flex;
               position: relative;
+              justify-content: center;
+              align-items: center;
               width: 320px;
               z-index: 2;
               outline: none;
               cursor: text;
-              border-style: none;
+              border-style: solid;
+              border-top-width: 1.5px;
+              border-right-width: 0px;
+              border-bottom-width: 1.5px;
+              border-left-width: 1.5px;
               background-color: rgb(150, 117, 122);
               border-top-left-radius: 5px;
               border-bottom-left-radius: 5px;
@@ -126,11 +142,14 @@
             .home-search-input::placeholder {
               font-family: 'Open Sans', sans-serif;
               color: rgb(246, 206, 143);
+              text-align: center;
             }
 
             .homeSearchBtn {
               display: flex;
               position: relative;
+              justify-content: center;
+              align-items: center;
               z-index: 4;
               border-style: outset;
               border-width: 1.5px;
@@ -277,77 +296,138 @@
       transition: 1s ease-in-out;
       transform: translate(0%, 50%);
 
-      .filters-container {
+      .filters-main-container {
         display: flex;
         position: relative;
         flex-direction: row;
         width: 100%;
-        justify-content: space-evenly;
-        align-items: center;
+        justify-content: space-between;
         margin: 20px 0px 10px 0px;
+        padding: 0px 10px;
 
-        .filter {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          color: rgb(246, 206, 143);
-          background-color: rgb(150, 117, 122);
-          margin: 5px;
-          font-family: sans-serif;
-          font-size: 20px;
-          // height: 35px;
-          border-radius: 5px;
-          border: rgba(94, 23, 66, 0.9);
-          border-style: solid;
-          border-width: 1.5px;
-
-          input,
-          select,
-          option {
-            background-color: transparent;
-            color: rgb(246, 206, 143);
-            border: none;
-            // height: 15vh;
-            // width: 11vw;
-            text-align: center;
+        .single-filter-container {
+          .filter-title-container {
+            .filter-title {
+              display: flex;
+              position: relative;
+              justify-content: center;
+              color: rgb(246, 206, 143);
+              font-family: 'Open Sans', sans-serif;
+              font-size: 20px;
+            }
           }
 
-          input {
-            background-color: transparent;
-            border: none;
-            font-family: sans-serif;
-            font-size: 16px;
-            color: rgb(246, 206, 143);
-          }
-          input::-webkit-inner-spin-button {
-            display: none;
-            -webkit-appearance: none;
-          }
-          input::-webkit-calendar-picker-indicator {
-            font-size: 18px;
-          }
-          // .input-field {
-          // 	background-color: white;
-          // }
-          input:focus,
-          select:focus,
-          option:focus {
-            outline: none;
-          }
-          .input-field {
-            width: 350px;
-            font-size: 32px;
-          }
-          p {
-            font-size: 24px;
-            padding: 10px;
-            cursor: pointer;
+          .filter-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            border: rgba(94, 23, 66, 0.9);
+            border-style: solid;
+            border-width: 1.5px;
+
+            input,
+            select,
+            option {
+              display: flex;
+              position: relative;
+              justify-content: center;
+              align-items: center;
+              margin: 5px;
+              background-color: rgb(150, 117, 122);
+              color: rgb(246, 206, 143);
+              border-style: solid;
+              border-width: 1.5px;
+              border-radius: 5px;
+              border-color: rgb(246, 206, 143);
+              font-family: 'Open Sans', sans-serif;
+              font-size: 18px;
+              text-decoration: none;
+              text-align: center;
+              outline: none;
+              cursor: pointer;
+              -webkit-user-select: none;
+              user-select: none;
+            }
+
+            input::-webkit-inner-spin-button {
+              display: none;
+              -webkit-appearance: none;
+            }
+
+            input::-webkit-calendar-picker-indicator {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              width: auto;
+              height: auto;
+              color: transparent;
+              background: transparent;
+              cursor: pointer;
+            }
+
+            input::-webkit-datetime-edit-day-field:focus,
+            input::-webkit-datetime-edit-month-field:focus,
+            input::-webkit-datetime-edit-year-field:focus {
+              background-color: transparent;
+              color: rgb(246, 206, 143);
+            }
           }
         }
-        .filter:hover {
-          transition: 0.5s;
-          border: solid 5px rgb(246, 206, 143);
+
+        .filter-results-btn-container {
+          display: flex;
+          position: relative;
+          flex-direction: row;
+          // justify-content: space-evenly;
+          align-items: center;
+
+          .reset-filters-btn {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            border-style: outset;
+            border-width: 1.5px;
+            // border-color: rgb(246, 206, 143);
+            border-color: white;
+            border-radius: 5px;
+            outline: none;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            // background-color: rgb(94, 23, 66);
+            background-color: red;
+            color: black;
+            // color: rgb(246, 206, 143);
+            cursor: pointer;
+            margin-right: 15px;
+          }
+
+          .filter-results-btn {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            border-style: outset;
+            border-width: 1.5px;
+            // border-color: rgb(246, 206, 143);
+            border-color: white;
+            border-radius: 5px;
+            outline: none;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            // background-color: rgb(94, 23, 66);
+            background-color: green;
+            color: white;
+            // color: rgb(246, 206, 143);
+            cursor: pointer;
+            margin-left: 15px;
+          }
         }
       }
     }
@@ -447,12 +527,12 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 100%;
-    margin: 60px 0px;
+    margin: 70px 0px 15px 0px;
 
     .event-details-navlink {
       display: flex;
       position: relative;
-      margin: 10px;
+      margin: 10px 0px;
     }
   }
 
