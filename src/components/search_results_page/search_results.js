@@ -25,6 +25,7 @@ class search_results extends Component {
       formatedCityName: '',
       filteredCities: [],
       showSuggestedCities: false,
+      cursorPosition: 0,
       showWarningModal: false
     };
     this.setSearchInput = this.setSearchInput.bind(this);
@@ -42,6 +43,8 @@ class search_results extends Component {
   }
 
   componentDidMount() {
+    // console.log('***Search Results Props: ', this.props);
+
     this.setSearchInput();
   }
 
@@ -116,19 +119,38 @@ class search_results extends Component {
 
     let endDate = `${year}-${month}-${day}`;
 
-    this.setState(
-      {
-        currentCity: params.location,
-        startDate: currentDate,
-        startTime: currentTime,
-        endDate: endDate,
-        searchInput: params.location,
-        formatedCityName: urlCityName
-      },
-      // () => console.log('searchState-After--', this.state)
+    if (this.props.location && this.props.location.state) {
+      this.setState(
+        {
+          currentCity: this.props.location.state.currentCity,
+          startDate: this.props.location.state.startDate,
+          startTime: currentTime,
+          endDate: this.props.location.state.endDate,
+          radius: this.props.location.state.radius,
+          genreName: this.props.location.state.genreName,
+          genreId: this.props.location.state.genreId,
+          searchInput: params.location,
+          formatedCityName: urlCityName
+        },
+        // () => console.log('searchState-After--', this.state)
 
-      () => this.searchEvents()
-    );
+        () => this.searchEvents()
+      );
+    } else {
+      this.setState(
+        {
+          currentCity: params.location,
+          startDate: currentDate,
+          startTime: currentTime,
+          endDate: endDate,
+          searchInput: params.location,
+          formatedCityName: urlCityName
+        },
+        // () => console.log('searchState-After--', this.state)
+
+        () => this.searchEvents()
+      );
+    }
   }
 
   searchEvents() {
@@ -311,11 +333,13 @@ class search_results extends Component {
     //   genreId: this.state.genreId
     // });
 
-    let genreCode =
-      'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAJ6,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF';
+    let genreCode = '';
 
     if (event.target.name === 'genreName') {
-      if (event.target.value === 'Alternative') {
+      if (event.target.value === 'All Genres') {
+        genreCode =
+          'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAJ6,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF';
+      } else if (event.target.value === 'Alternative') {
         genreCode = 'KnvZfZ7vAvv';
       } else if (event.target.value === 'Ballads/Romantic') {
         genreCode = 'KnvZfZ7vAve';
@@ -539,16 +563,18 @@ class search_results extends Component {
 
   render() {
     const {
+      currentCity,
+      showFilters,
       startDate,
       endDate,
       radius,
       genreName,
-      filteredCities,
+      genreId,
       searchInput,
-      cursorPosition,
+      filteredCities,
       showSuggestedCities,
-      showWarningModal,
-      showFilters
+      cursorPosition,
+      showWarningModal
     } = this.state;
 
     const citySuggestions = filteredCities.map((city, i, filteredCities) => {
@@ -575,7 +601,17 @@ class search_results extends Component {
 
         return (
           <NavLink
-            to={`/event/${e.id}`}
+            to={{
+              pathname: `/event/${e.id}`,
+              state: {
+                currentCity: `${currentCity}`,
+                startDate: `${startDate}`,
+                endDate: `${endDate}`,
+                radius: `${radius}`,
+                genreName: `${genreName}`,
+                genreId: `${genreId}`
+              }
+            }}
             key={e.id}
             event={e}
             className='event-details-navlink'

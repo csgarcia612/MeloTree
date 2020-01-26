@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { setUser } from '../../dux/reducer';
 import './header.scss';
@@ -65,23 +65,14 @@ class Header extends Component {
         ></div>
 
         <div className='header-container'>
-          <NavLink
-            to='/'
-            className={
-              this.state.showMenu
-                ? 'disabled-navlink'
-                : 'header-homepage-navlink'
-            }
-          >
-            <div className='header-logo-container'>
-              <img
-                className='header-logo'
-                src={headerMiniTree}
-                alt='Tree with music notes as leaves'
-              />
-              <p className='header-name'>MeloTree</p>
-            </div>
-          </NavLink>
+          <div className='header-logo-container'>
+            <img
+              className='header-logo'
+              src={headerMiniTree}
+              alt='Tree with music notes as leaves'
+            />
+            <p className='header-name'>MeloTree</p>
+          </div>
           <div
             className={this.state.showMenu ? 'menuOne clickMenuOne' : 'menuOne'}
             onClick={this.addClassFunOne}

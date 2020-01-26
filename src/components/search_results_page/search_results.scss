@@ -647,7 +647,12 @@
     .event-details-navlink {
       display: flex;
       position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       margin: 10px 0px;
+      width: 370px;
+      height: 230px;
     }
 
     .no-results-msg {

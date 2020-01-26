@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { setUser } from '../../dux/reducer';
 import OrderConfirmation from '../order_confirmation_modal/order_confirmation';
+import { NavLink } from 'react-router-dom';
 
 class EventDetails extends Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class EventDetails extends Component {
   }
 
   componentDidMount() {
-    // console.log("props", this.props);
+    // console.log('props', this.props);
+
     this.getEvent();
     this.getPrice();
     this.getTime();
@@ -104,6 +106,15 @@ class EventDetails extends Component {
 
   render() {
     const { singleEvent, ticketPrice } = this.state;
+
+    const {
+      currentCity,
+      startDate,
+      endDate,
+      radius,
+      genreName,
+      genreId
+    } = this.props.location.state;
 
     let location =
       singleEvent &&
@@ -211,6 +222,7 @@ class EventDetails extends Component {
               {/* {console.log('singleEvent', singleEvent)} */}
               {/* {console.log("bestPicture", bestArtistPicture)} */}
               {/* {console.log('purchase props', purchaseProps)}; */}
+
               <OrderConfirmation
                 closeModal={this.toggleModal}
                 purchaseInfo={purchaseProps}
@@ -218,6 +230,24 @@ class EventDetails extends Component {
             </div>
           ) : null}
         </React.Fragment>
+        <div className='back-btn-main-container'>
+          <NavLink
+            to={{
+              pathname: `/search/${currentCity}`,
+              state: {
+                currentCity: `${currentCity}`,
+                startDate: `${startDate}`,
+                endDate: `${endDate}`,
+                radius: `${radius}`,
+                genreName: `${genreName}`,
+                genreId: `${genreId}`
+              }
+            }}
+            className='back-btn-container'
+          >
+            <p className='back-btn'>BACK TO RESULTS</p>
+          </NavLink>
+        </div>
         <div className='event-details-container'>
           <div className='event-details-image-container'>
             <img
