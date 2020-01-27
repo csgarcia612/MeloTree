@@ -149,7 +149,7 @@ class home extends Component {
 
   goToSearchResults() {
     const { searchInput } = this.state;
-    let validCharacters = /[-.'a-z ]/gi;
+    let validCharacters = /^[A-Z '.-]*$/gi;
 
     if (!searchInput || !validCharacters.test(searchInput)) {
       this.toggleWarningModal();
@@ -202,25 +202,33 @@ class home extends Component {
             </p>
           </div>
         </div>
-        <img src={musictree2} alt='Tree with music notes as leaves' />
-        <div className='search-box'>
-          <input
-            className='home-search-input'
-            placeholder='Search by City or State'
-            onChange={this.updateSearchInput}
-            onKeyUp={this.getCitySuggestions}
-            value={searchInput}
+        <div className='logo-container'>
+          <img
+            src={musictree2}
+            className='logo'
+            alt='Tree with music notes as leaves'
           />
-          <button className='homeSearchBtn' onClick={this.goToSearchResults}>
-            Search
-          </button>
         </div>
-        <div
-          className={
-            showSuggestedCities ? 'showCitiesDropDown' : 'hideCitiesDropDown'
-          }
-        >
-          <ul className='suggestionList'>{citySuggestions}</ul>
+        <div className='search-container'>
+          <div className='search-box'>
+            <input
+              className='home-search-input'
+              placeholder='Search by City or State'
+              onChange={this.updateSearchInput}
+              onKeyUp={this.getCitySuggestions}
+              value={searchInput}
+            />
+            <button className='homeSearchBtn' onClick={this.goToSearchResults}>
+              Search
+            </button>
+          </div>
+          <div
+            className={
+              showSuggestedCities ? 'showCitiesDropDown' : 'hideCitiesDropDown'
+            }
+          >
+            <ul className='suggestionList'>{citySuggestions}</ul>
+          </div>
         </div>
       </div>
     );

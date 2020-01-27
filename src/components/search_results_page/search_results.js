@@ -312,7 +312,7 @@ class search_results extends Component {
 
   goToSearchResults() {
     const { searchInput } = this.state;
-    let validCharacters = /[-.'a-z ]/gi;
+    let validCharacters = /^[A-Z '.-]*$/gi;
 
     if (!searchInput || !validCharacters.test(searchInput)) {
       this.toggleWarningModal();
