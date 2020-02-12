@@ -784,20 +784,17 @@ class search_results extends Component {
                   </select>
                 </div>
               </div>
-              <div className={'filter-results-btn-container'}>
-                <button
-                  className='reset-filters-btn'
-                  onClick={this.resetFilters}
-                >
-                  Reset Filters
-                </button>
-                <button
-                  className='filter-results-btn'
-                  onClick={this.searchEvents}
-                >
-                  Filter Events
-                </button>
-              </div>
+            </div>
+            <div className={'filter-results-btn-container'}>
+              <button className='reset-filters-btn' onClick={this.resetFilters}>
+                Reset Filters
+              </button>
+              <button
+                className='filter-results-btn'
+                onClick={this.searchEvents}
+              >
+                Filter Events
+              </button>
             </div>
           </div>
         </div>

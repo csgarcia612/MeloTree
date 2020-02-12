@@ -24,7 +24,7 @@ export default class About extends Component {
                 <p className='contributor-info'>Christopher Garcia </p>
               </div>
               <div className='name-container'>
-                <p className='info'>Home City: </p>
+                <p className='info'>Hometown: </p>
                 <p className='contributor-info'>Lisle, IL</p>
               </div>
             </div>
@@ -43,7 +43,7 @@ export default class About extends Component {
                 <p className='contributor-info'>Kyle Boysen</p>
               </div>
               <div className='name-container'>
-                <p className='info'>Home City: </p>
+                <p className='info'>Hometown: </p>
                 <p className='contributor-info'>Phoenix, AZ</p>
               </div>
             </div>
@@ -62,7 +62,7 @@ export default class About extends Component {
                 <p className='contributor-info'>Huy "T" Pham</p>
               </div>
               <div className='name-container'>
-                <p className='info'>Home City: </p>
+                <p className='info'>Hometown: </p>
                 <p className='contributor-info'>Avondale, AZ</p>
               </div>
             </div>

@@ -43,6 +43,7 @@ module.exports = {
       const db = index.database;
 
       // console.log('***user: ', user);
+      // console.log('***db: ', db);
 
       return db.get_user_auth0([user.sub]).then(newUser => {
         // console.log('testing', user.sub);

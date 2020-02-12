@@ -24,7 +24,7 @@ class Header extends Component {
   }
 
   login(req, res) {
-    console.log('***Window Location: ', window.location);
+    // console.log('***Window Location: ', window.location);
 
     let refererURL = window.location.href;
 

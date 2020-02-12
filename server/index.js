@@ -18,14 +18,26 @@ dotenv.config();
 
 app.use(bodyParser.json());
 
+// massive({
+//   host: `${process.env.PG_HOST}`,
+//   port: process.env.PG_PORT,
+//   database: `${process.env.PG_DATABASE}`,
+//   user: `${process.env.PG_USER}`,
+//   password: `${process.env.PG_SECRET}`,
+//   ssl: true,
+//   // ssl: {
+//   //   rejectUnauthorized: true
+//   // }
+//   rejectUnauthorized: true
+// })
 massive(process.env.CONNECTION_STRING)
   .then(db => {
     exports.database = db;
     console.log('Database Connection : ONLINE');
   })
-  .catch(error =>
-    console.log(('😡 Error with massive DB connection 😡', error))
-  );
+  .catch(error => {
+    console.log(('😡 Error with Massive DB Connection 😡', error));
+  });
 
 app.use(cors());
 
@@ -39,6 +51,10 @@ app.use(
 );
 
 let client = redis.createClient(process.env.REDIS_URI);
+
+client.on('error', error => {
+  console.log('***Redis Error: ', error);
+});
 
 app.use(
   session({
