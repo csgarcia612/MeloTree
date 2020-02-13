@@ -10,9 +10,11 @@ class Header extends Component {
   constructor() {
     super();
     this.state = {
-      showMenu: false
+      showMenu: false,
+      showLoginWarning: false
     };
     this.login = this.login.bind(this);
+    this.loginWarning = this.loginWarning.bind(this);
     this.addClassFunOne = this.addClassFunOne.bind(this);
   }
 
@@ -24,19 +26,33 @@ class Header extends Component {
   }
 
   login(req, res) {
-    // console.log('***Window Location: ', window.location);
+    console.log('***Window History : ', window.history.state);
 
-    let refererURL = window.location.href;
+    let refererInfo = null;
 
     let redirectUri = encodeURIComponent(
       window.location.origin + '/auth/callback'
     );
 
-    // console.log('*** refererURL: ', refererURL);
+    if (window.location.pathname.includes('event')) {
+      let refererObj = this.props.location.state;
 
-    // console.log('redirectUri', redirectUri);
+      refererObj.href = window.location.href;
 
-    window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererURL}&response_type=code`;
+      console.log('***refererObj : ', refererObj);
+
+      refererInfo = JSON.stringify(refererObj);
+
+      window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererInfo}&response_type=code`;
+    } else if (window.location.pathname.includes('search')) {
+      let searchResultsState = {};
+
+      window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererInfo}&response_type=code`;
+    } else {
+      refererInfo = window.location.href;
+
+      window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererInfo}&response_type=code`;
+    }
   }
 
   logout = () => {
@@ -46,6 +62,13 @@ class Header extends Component {
       this.props.history.push('/');
     });
   };
+
+  loginWarning() {
+    this.setState({
+      showMenu: false,
+      showLoginWarning: !this.state.showLoginWarning
+    });
+  }
 
   addClassFunOne() {
     this.setState({
@@ -63,6 +86,20 @@ class Header extends Component {
           }
           onClick={this.addClassFunOne}
         ></div>
+        <div
+          className={
+            this.state.showLoginWarning
+              ? 'showLoginWarning'
+              : 'hideLoginWarning'
+          }
+          onClick={this.loginWarning}
+        >
+          <div className='loginWarningContainer'>
+            <p className='loginWarning'>Return To Search Results Page</p>
+            <span className='loginWarningSpan' />
+            <p className='loginWarning'>Then Login</p>
+          </div>
+        </div>
 
         <div className='header-container'>
           <div className='header-logo-container'>
@@ -141,6 +178,14 @@ class Header extends Component {
                 </ul>
                 <div className='log-btn-container'>
                   <button className='login-button' onClick={this.login}>
+                    {/* <button
+                    className='login-button'
+                    onClick={
+                      window.location.pathname.includes('event')
+                        ? this.loginWarning
+                        : this.login
+                    }
+                  > */}
                     Login
                   </button>
                 </div>

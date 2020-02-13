@@ -21,6 +21,8 @@ class search_results extends Component {
       genreName: 'All Genres',
       genreId:
         'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAJ6,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF',
+      currentPage: 0,
+      totalPages: 0,
       searchInput: '',
       formatedCityName: '',
       filteredCities: [],
@@ -161,7 +163,8 @@ class search_results extends Component {
       endTime,
       radius,
       genreId,
-      formatedCityName
+      formatedCityName,
+      currentPage
     } = this.state;
 
     // console.log('searchEvents-formattedCityName---', formatedCityName);
@@ -169,7 +172,7 @@ class search_results extends Component {
     formatedCityName &&
       axios
         .get(
-          `https://app.ticketmaster.com/discovery/v2/events.json?apikey=eIMh2CGNhtUTSybN21TU3JRes1j9raV3&radius=${radius}&unit=miles&localStartEndDateTime=${startDate}${startTime},${endDate}${endTime}&includeDateRange=true&size=20&page=0&sort=date,asc&city=${formatedCityName}&countryCode=US&classificationName=[music]&includeFamily=no&genreId=${genreId}`
+          `https://app.ticketmaster.com/discovery/v2/events.json?apikey=eIMh2CGNhtUTSybN21TU3JRes1j9raV3&radius=${radius}&unit=miles&localStartEndDateTime=${startDate}${startTime},${endDate}${endTime}&includeDateRange=true&size=20&page=${currentPage}&sort=date,asc&city=${formatedCityName}&countryCode=US&classificationName=[music]&includeFamily=no&genreId=${genreId}`
         )
         .then(res => {
           // console.log('res.data in searchquery response', res.data);

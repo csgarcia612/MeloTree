@@ -19,6 +19,57 @@
     display: none;
   }
 
+  .showLoginWarning {
+    display: flex;
+    position: fixed;
+    z-index: 950;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    background: rgba(50, 50, 50, 0.5);
+    cursor: pointer;
+
+    .loginWarningContainer {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      background-color: #5e1742;
+      box-shadow: #5e1742 0px 0px 15px, #5e1742 0px 0px 20px,
+        #5e1742 0px 0px 25px, #5e1742 0px 0px 30px;
+      cursor: pointer;
+
+      .loginWarning {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: center;
+        color: rgb(246, 206, 143);
+        line-height: 36px;
+        margin: 10px;
+      }
+
+      .loginWarningSpan {
+        display: flex;
+        position: relative;
+        width: 98%;
+        height: 5px;
+        border-radius: 5px;
+        background-color: rgb(246, 206, 143);
+        margin: 0px 30px 0px 30px;
+      }
+    }
+  }
+
+  .hideLoginWarning {
+    display: none;
+  }
+
   .header-container {
     display: flex;
     position: fixed;

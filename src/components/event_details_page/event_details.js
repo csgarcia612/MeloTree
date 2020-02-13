@@ -10,6 +10,7 @@ class EventDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      eventNum: 0,
       singleEvent: null,
       ticketPrice: 0,
       showModal: false
@@ -22,7 +23,9 @@ class EventDetails extends Component {
   }
 
   componentDidMount() {
-    // console.log('props', this.props);
+    console.log('props', this.props);
+
+    console.log('***history : ', window.history);
 
     this.getEvent();
     this.getPrice();
@@ -31,8 +34,14 @@ class EventDetails extends Component {
   }
 
   getEvent() {
-    let eventID = this.props.match.params && this.props.match.params.id;
+    // console.log('***props.match : ', this.props.match);
+
+    let eventID = this.props.match
+      ? this.props.match.params && this.props.match.params.id
+      : window.location.pathname.split('/event/').join('');
+
     // console.log('eventID', eventID);
+
     axios
       .get(
         `https://app.ticketmaster.com/discovery/v2/events/${eventID}.json?apikey=eIMh2CGNhtUTSybN21TU3JRes1j9raV3`
