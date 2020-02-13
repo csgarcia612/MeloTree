@@ -120,7 +120,7 @@
       position: relative;
       flex-direction: column;
       align-items: center;
-      margin: 30px 0px 30px 0px;
+      margin: 50px 0px 30px 0px;
       background-color: rgba(150, 117, 122, 0.95);
       box-shadow: rgba(150, 117, 122, 0.95) 0px 0px 5px,
         rgba(150, 117, 122, 0.95) 0px 0px 10px,
@@ -143,6 +143,7 @@
           font-size: 30px;
           font-weight: bold;
           letter-spacing: 1px;
+          line-height: 36px;
         }
       }
 
@@ -155,7 +156,6 @@
         .event-date-time-container {
           display: flex;
           position: relative;
-          align-items: center;
           flex-direction: column;
           justify-content: center;
           align-items: center;
@@ -196,6 +196,7 @@
               font-size: 20px;
               letter-spacing: 1px;
               margin-bottom: 7.5px;
+              line-height: 26px;
             }
 
             .proudly-presents {
@@ -211,6 +212,7 @@
               font-size: 36px;
               letter-spacing: 1px;
               margin: 15px 0px 10px 0px;
+              line-height: 42px;
             }
           }
 
@@ -235,6 +237,7 @@
               font-size: 30px;
               letter-spacing: 1px;
               margin: 7.5px 0px 7.5px 0px;
+              line-height: 36px;
             }
           }
 
@@ -281,6 +284,7 @@
               font-size: 20px;
               letter-spacing: 1px;
               margin-bottom: 10px;
+              line-height: 26px;
             }
 
             .venue-address-container {
@@ -297,6 +301,7 @@
                 font-size: 20px;
                 letter-spacing: 1px;
                 margin-bottom: 5px;
+                line-height: 26px;
               }
 
               .venue-city-state-zip {
@@ -306,6 +311,7 @@
                 font-family: sans-serif;
                 font-size: 20px;
                 letter-spacing: 1px;
+                line-height: 26px;
               }
             }
           }
@@ -372,6 +378,884 @@
               0px -0.75px 0 white;
             letter-spacing: 2.5px;
             text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .event-details-page-container {
+    .show-modal {
+      height: calc(100vh - 35px);
+      top: 35px;
+    }
+
+    .back-btn-main-container {
+      top: 30px;
+      left: 0px;
+      width: 200px;
+      height: 65px;
+      border-bottom-right-radius: 10px;
+      padding-top: 15px;
+
+      .back-btn-container {
+        .back-btn {
+          width: 185px;
+          height: 30px;
+          font-size: 20px;
+        }
+      }
+    }
+
+    .event-details-container {
+      margin: 100px 0px 15px 0px;
+
+      .event-details-image-container {
+        width: auto;
+        height: 300px;
+
+        .artist-picture {
+          width: auto;
+          height: 100%;
+        }
+      }
+
+      .all-event-info {
+        flex-direction: column;
+        align-items: center;
+        margin: 50px 0px 30px 0px;
+
+        .event-name-container {
+          margin: 20px;
+
+          .event-name {
+            font-size: 30px;
+            line-height: 36px;
+          }
+        }
+
+        .event-details-info-container {
+          flex-direction: column;
+
+          .event-date-time-container {
+            flex-direction: column;
+
+            .event-date {
+              font-size: 24px;
+              margin-bottom: 15px;
+            }
+
+            .event-time {
+              font-size: 24px;
+            }
+          }
+
+          .event-artist-info-container {
+            flex-direction: row;
+
+            .main-artist-container {
+              flex-direction: column;
+              margin: 20px;
+
+              .venue-presents {
+                font-size: 20px;
+                margin-bottom: 7.5px;
+                line-height: 26px;
+              }
+
+              .proudly-presents {
+                font-size: 20px;
+              }
+
+              .artist-name {
+                font-size: 36px;
+                margin: 15px 0px 10px 0px;
+                line-height: 42px;
+              }
+            }
+
+            .show-special-guests {
+              flex-direction: column;
+              margin: 20px 20px 20px 50px;
+
+              .special-guest {
+                font-size: 20px;
+                margin-bottom: 10px;
+              }
+
+              .guest-artist {
+                font-size: 30px;
+                margin: 7.5px 0px 7.5px 0px;
+                line-height: 36px;
+              }
+            }
+          }
+
+          .event-venue-container {
+            flex-direction: row;
+
+            .venue-map-container {
+              margin-left: 15px;
+
+              iframe {
+                height: 250px;
+                width: 350px;
+              }
+            }
+
+            .event-venue-info-container {
+              flex-direction: column;
+              align-items: flex-start;
+              margin: 0px 15px 0px 20px;
+
+              .venue-name {
+                text-align: left;
+                font-size: 20px;
+                margin-bottom: 10px;
+                line-height: 26px;
+              }
+
+              .venue-address-container {
+                flex-direction: column;
+                justify-content: left;
+
+                .venue-street-address {
+                  text-align: left;
+                  font-size: 20px;
+                  margin-bottom: 5px;
+                  line-height: 26px;
+                }
+
+                .venue-city-state-zip {
+                  text-align: left;
+                  font-size: 20px;
+                  line-height: 26px;
+                }
+              }
+            }
+          }
+
+          .event-purchase-container {
+            flex-direction: column;
+            margin: 30px 0px 20px 0px;
+
+            .ticket-price {
+              font-size: 30px;
+              margin-bottom: 20px;
+            }
+
+            .purchase-tickets-button {
+              font-size: 24px;
+            }
+
+            .login-to-purchase {
+              font-size: 25px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+  .event-details-page-container {
+    .show-modal {
+      height: calc(100vh - 35px);
+      top: 35px;
+    }
+
+    .back-btn-main-container {
+      top: 30px;
+      left: 0px;
+      width: 200px;
+      height: 65px;
+      border-bottom-right-radius: 10px;
+      padding-top: 15px;
+
+      .back-btn-container {
+        .back-btn {
+          width: 185px;
+          height: 30px;
+          font-size: 20px;
+        }
+      }
+    }
+
+    .event-details-container {
+      margin: 100px 0px 15px 0px;
+
+      .event-details-image-container {
+        width: auto;
+        height: 300px;
+
+        .artist-picture {
+          width: auto;
+          height: 100%;
+        }
+      }
+
+      .all-event-info {
+        flex-direction: column;
+        align-items: center;
+        margin: 50px 0px 30px 0px;
+
+        .event-name-container {
+          margin: 20px;
+
+          .event-name {
+            font-size: 30px;
+            line-height: 36px;
+          }
+        }
+
+        .event-details-info-container {
+          flex-direction: column;
+
+          .event-date-time-container {
+            flex-direction: column;
+
+            .event-date {
+              font-size: 24px;
+              margin-bottom: 15px;
+            }
+
+            .event-time {
+              font-size: 24px;
+            }
+          }
+
+          .event-artist-info-container {
+            flex-direction: row;
+
+            .main-artist-container {
+              flex-direction: column;
+              margin: 20px;
+
+              .venue-presents {
+                font-size: 20px;
+                margin-bottom: 7.5px;
+                line-height: 26px;
+              }
+
+              .proudly-presents {
+                font-size: 20px;
+              }
+
+              .artist-name {
+                font-size: 36px;
+                margin: 15px 0px 10px 0px;
+                line-height: 42px;
+              }
+            }
+
+            .show-special-guests {
+              flex-direction: column;
+              margin: 20px 20px 20px 50px;
+
+              .special-guest {
+                font-size: 20px;
+                margin-bottom: 10px;
+              }
+
+              .guest-artist {
+                font-size: 30px;
+                margin: 7.5px 0px 7.5px 0px;
+                line-height: 36px;
+              }
+            }
+          }
+
+          .event-venue-container {
+            flex-direction: row;
+
+            .venue-map-container {
+              margin-left: 15px;
+
+              iframe {
+                height: 250px;
+                width: 350px;
+              }
+            }
+
+            .event-venue-info-container {
+              flex-direction: column;
+              align-items: flex-start;
+              margin: 0px 15px 0px 20px;
+
+              .venue-name {
+                text-align: left;
+                font-size: 20px;
+                margin-bottom: 10px;
+                line-height: 26px;
+              }
+
+              .venue-address-container {
+                flex-direction: column;
+                justify-content: left;
+
+                .venue-street-address {
+                  text-align: left;
+                  font-size: 20px;
+                  margin-bottom: 5px;
+                  line-height: 26px;
+                }
+
+                .venue-city-state-zip {
+                  text-align: left;
+                  font-size: 20px;
+                  line-height: 26px;
+                }
+              }
+            }
+          }
+
+          .event-purchase-container {
+            flex-direction: column;
+            margin: 30px 0px 20px 0px;
+
+            .ticket-price {
+              font-size: 30px;
+              margin-bottom: 20px;
+            }
+
+            .purchase-tickets-button {
+              font-size: 24px;
+            }
+
+            .login-to-purchase {
+              font-size: 25px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 414px) and (max-width: 599px) {
+  .event-details-page-container {
+    .show-modal {
+      height: calc(100vh - 35px);
+      top: 35px;
+    }
+
+    .back-btn-main-container {
+      top: 30px;
+      left: 0px;
+      width: 185px;
+      height: 50px;
+      border-bottom-right-radius: 10px;
+      padding-top: 15px;
+
+      .back-btn-container {
+        .back-btn {
+          width: 165px;
+          height: 24px;
+          font-size: 18px;
+        }
+      }
+    }
+
+    .event-details-container {
+      margin: 100px 0px 15px 0px;
+
+      .event-details-image-container {
+        width: auto;
+        height: 200px;
+
+        .artist-picture {
+          width: auto;
+          height: 100%;
+        }
+      }
+
+      .all-event-info {
+        flex-direction: column;
+        align-items: center;
+        margin: 50px 0px 30px 0px;
+
+        .event-name-container {
+          margin: 10px;
+
+          .event-name {
+            font-size: 20px;
+            line-height: 26px;
+          }
+        }
+
+        .event-details-info-container {
+          flex-direction: column;
+
+          .event-date-time-container {
+            flex-direction: column;
+
+            .event-date {
+              font-size: 18px;
+              margin-bottom: 10px;
+            }
+
+            .event-time {
+              font-size: 18px;
+            }
+          }
+
+          .event-artist-info-container {
+            flex-direction: column;
+
+            .main-artist-container {
+              flex-direction: column;
+              margin: 20px 10px;
+
+              .venue-presents {
+                font-size: 18px;
+                margin-bottom: 7.5px;
+                line-height: 24px;
+              }
+
+              .proudly-presents {
+                font-size: 18px;
+              }
+
+              .artist-name {
+                font-size: 24px;
+                margin: 15px 10px 0px 10px;
+                line-height: 30px;
+              }
+            }
+
+            .show-special-guests {
+              flex-direction: column;
+              margin: 10px 10px 20px 10px;
+
+              .special-guest {
+                font-size: 18px;
+                margin-bottom: 10px;
+              }
+
+              .guest-artist {
+                font-size: 24px;
+                margin: 7.5px 0px 7.5px 0px;
+                line-height: 30px;
+              }
+            }
+          }
+
+          .event-venue-container {
+            flex-direction: column;
+
+            .venue-map-container {
+              margin-left: 0px;
+
+              iframe {
+                height: 250px;
+                width: 375px;
+              }
+            }
+
+            .event-venue-info-container {
+              flex-direction: column;
+              align-items: flex-start;
+              margin: 20px 0px 10px 0px;
+
+              .venue-name {
+                text-align: left;
+                font-size: 20px;
+                margin-bottom: 10px;
+                line-height: 26px;
+              }
+
+              .venue-address-container {
+                flex-direction: column;
+                justify-content: left;
+
+                .venue-street-address {
+                  text-align: left;
+                  font-size: 20px;
+                  margin-bottom: 5px;
+                  line-height: 26px;
+                }
+
+                .venue-city-state-zip {
+                  text-align: left;
+                  font-size: 20px;
+                  line-height: 26px;
+                }
+              }
+            }
+          }
+
+          .event-purchase-container {
+            flex-direction: column;
+            margin: 30px 10px 20px 10px;
+
+            .ticket-price {
+              font-size: 24px;
+              margin-bottom: 20px;
+            }
+
+            .purchase-tickets-button {
+              font-size: 24px;
+            }
+
+            .login-to-purchase {
+              font-size: 24px;
+              line-height: 30px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 360px) and (max-width: 413px) {
+  .event-details-page-container {
+    .show-modal {
+      height: calc(100vh - 35px);
+      top: 35px;
+    }
+
+    .back-btn-main-container {
+      top: 30px;
+      left: 0px;
+      width: 185px;
+      height: 50px;
+      border-bottom-right-radius: 10px;
+      padding-top: 15px;
+
+      .back-btn-container {
+        .back-btn {
+          width: 165px;
+          height: 24px;
+          font-size: 18px;
+        }
+      }
+    }
+
+    .event-details-container {
+      margin: 90px 0px 15px 0px;
+
+      .event-details-image-container {
+        width: auto;
+        height: 175px;
+
+        .artist-picture {
+          width: auto;
+          height: 100%;
+        }
+      }
+
+      .all-event-info {
+        flex-direction: column;
+        align-items: center;
+        margin: 50px 0px 30px 0px;
+
+        .event-name-container {
+          margin: 10px;
+
+          .event-name {
+            font-size: 20px;
+            line-height: 26px;
+          }
+        }
+
+        .event-details-info-container {
+          flex-direction: column;
+
+          .event-date-time-container {
+            flex-direction: column;
+
+            .event-date {
+              font-size: 18px;
+              margin-bottom: 10px;
+            }
+
+            .event-time {
+              font-size: 18px;
+            }
+          }
+
+          .event-artist-info-container {
+            flex-direction: column;
+
+            .main-artist-container {
+              flex-direction: column;
+              margin: 20px 10px;
+
+              .venue-presents {
+                font-size: 18px;
+                margin-bottom: 7.5px;
+                line-height: 24px;
+              }
+
+              .proudly-presents {
+                font-size: 18px;
+              }
+
+              .artist-name {
+                font-size: 24px;
+                margin: 15px 10px 0px 10px;
+                line-height: 30px;
+              }
+            }
+
+            .show-special-guests {
+              flex-direction: column;
+              margin: 10px 10px 20px 10px;
+
+              .special-guest {
+                font-size: 18px;
+                margin-bottom: 10px;
+              }
+
+              .guest-artist {
+                font-size: 24px;
+                margin: 7.5px 0px 7.5px 0px;
+                line-height: 30px;
+              }
+            }
+          }
+
+          .event-venue-container {
+            flex-direction: column;
+
+            .venue-map-container {
+              margin-left: 0px;
+
+              iframe {
+                height: 175px;
+                width: 335px;
+              }
+            }
+
+            .event-venue-info-container {
+              flex-direction: column;
+              align-items: flex-start;
+              margin: 20px 0px 10px 0px;
+
+              .venue-name {
+                text-align: left;
+                font-size: 20px;
+                margin-bottom: 10px;
+                line-height: 26px;
+              }
+
+              .venue-address-container {
+                flex-direction: column;
+                justify-content: left;
+
+                .venue-street-address {
+                  text-align: left;
+                  font-size: 20px;
+                  margin-bottom: 5px;
+                  line-height: 26px;
+                }
+
+                .venue-city-state-zip {
+                  text-align: left;
+                  font-size: 20px;
+                  line-height: 26px;
+                }
+              }
+            }
+          }
+
+          .event-purchase-container {
+            flex-direction: column;
+            margin: 30px 10px 20px 10px;
+
+            .ticket-price {
+              font-size: 24px;
+              margin-bottom: 20px;
+            }
+
+            .purchase-tickets-button {
+              font-size: 24px;
+            }
+
+            .login-to-purchase {
+              font-size: 24px;
+              line-height: 30px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 359px) {
+  .event-details-page-container {
+    .show-modal {
+      height: calc(100vh - 35px);
+      top: 35px;
+    }
+
+    .back-btn-main-container {
+      top: 30px;
+      left: 0px;
+      width: 185px;
+      height: 50px;
+      border-bottom-right-radius: 10px;
+      padding-top: 15px;
+
+      .back-btn-container {
+        .back-btn {
+          width: 165px;
+          height: 24px;
+          font-size: 18px;
+        }
+      }
+    }
+
+    .event-details-container {
+      margin: 90px 0px 15px 0px;
+
+      .event-details-image-container {
+        width: auto;
+        height: 155px;
+
+        .artist-picture {
+          width: auto;
+          height: 100%;
+        }
+      }
+
+      .all-event-info {
+        flex-direction: column;
+        align-items: center;
+        margin: 50px 0px 30px 0px;
+
+        .event-name-container {
+          margin: 10px;
+
+          .event-name {
+            font-size: 20px;
+            line-height: 26px;
+          }
+        }
+
+        .event-details-info-container {
+          flex-direction: column;
+
+          .event-date-time-container {
+            flex-direction: column;
+
+            .event-date {
+              font-size: 18px;
+              margin-bottom: 10px;
+            }
+
+            .event-time {
+              font-size: 18px;
+            }
+          }
+
+          .event-artist-info-container {
+            flex-direction: column;
+
+            .main-artist-container {
+              flex-direction: column;
+              margin: 20px 10px;
+
+              .venue-presents {
+                font-size: 18px;
+                margin-bottom: 7.5px;
+                line-height: 24px;
+              }
+
+              .proudly-presents {
+                font-size: 18px;
+              }
+
+              .artist-name {
+                font-size: 24px;
+                margin: 15px 10px 0px 10px;
+                line-height: 30px;
+              }
+            }
+
+            .show-special-guests {
+              flex-direction: column;
+              margin: 10px 10px 20px 10px;
+
+              .special-guest {
+                font-size: 18px;
+                margin-bottom: 10px;
+              }
+
+              .guest-artist {
+                font-size: 24px;
+                margin: 7.5px 0px 7.5px 0px;
+                line-height: 30px;
+              }
+            }
+          }
+
+          .event-venue-container {
+            flex-direction: column;
+
+            .venue-map-container {
+              margin-left: 0px;
+
+              iframe {
+                height: 155px;
+                width: 295px;
+              }
+            }
+
+            .event-venue-info-container {
+              flex-direction: column;
+              align-items: flex-start;
+              margin: 20px 0px 10px 0px;
+
+              .venue-name {
+                text-align: left;
+                font-size: 18px;
+                margin-bottom: 10px;
+                line-height: 24px;
+              }
+
+              .venue-address-container {
+                flex-direction: column;
+                justify-content: left;
+
+                .venue-street-address {
+                  text-align: left;
+                  font-size: 18px;
+                  margin-bottom: 5px;
+                  line-height: 24px;
+                }
+
+                .venue-city-state-zip {
+                  text-align: left;
+                  font-size: 18px;
+                  line-height: 24px;
+                }
+              }
+            }
+          }
+
+          .event-purchase-container {
+            flex-direction: column;
+            margin: 30px 10px 20px 10px;
+
+            .ticket-price {
+              font-size: 24px;
+              margin-bottom: 20px;
+            }
+
+            .purchase-tickets-button {
+              font-size: 24px;
+            }
+
+            .login-to-purchase {
+              font-size: 18px;
+              line-height: 24px;
+            }
           }
         }
       }

@@ -29,7 +29,7 @@
       bottom: 0px;
       flex-direction: row;
       width: 100%;
-      height: 65px;
+      height: 35%;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
       font-family: sans-serif;
@@ -46,6 +46,7 @@
         padding: 2.5px 2.5px 2.5px 2.5px;
         border-bottom-left-radius: 10px;
         background-color: rgba(150, 117, 122, 0.9);
+
         .mini-event-name {
           display: flex;
           text-align: center;
@@ -72,6 +73,7 @@
         height: 100%;
         border-bottom-right-radius: 10px;
         background-color: rgba(201, 70, 61, 0.9);
+
         .mini-date-month {
           display: flex;
           font-size: 20px;
@@ -96,4 +98,292 @@
   box-shadow: 0px 3px 1px rgb(94, 23, 66), 0px 3px 3px rgb(94, 23, 66),
     0px 3px 5px rgb(94, 23, 66), 0px 3px 7px rgb(94, 23, 66),
     0px 3px 9px rgb(94, 23, 66);
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .mini-event-container {
+    .mini-event-image-container {
+      .mini-event-info-container {
+        bottom: 0px;
+        flex-direction: row;
+        width: 100%;
+        height: 45%;
+
+        .mini-event-name-container {
+          left: 0;
+          justify-content: space-evenly;
+          align-items: center;
+          width: 80%;
+          height: 100%;
+          padding: 2.5px 2.5px 2.5px 2.5px;
+
+          .mini-event-name {
+            font-size: 20px;
+          }
+
+          .mini-venue-name {
+            font-size: 16px;
+          }
+        }
+
+        .mini-event-date-container {
+          right: 0;
+          flex-direction: column;
+          justify-content: space-evenly;
+          width: 20%;
+          height: 100%;
+
+          .mini-date-month {
+            font-size: 20px;
+            margin-top: 2.5px;
+          }
+
+          .mini-date-day {
+            font-size: 30px;
+            margin-bottom: 2.5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .mini-event-container {
+    .mini-event-image-container {
+      .mini-event-info-container {
+        bottom: 0px;
+        flex-direction: row;
+        width: 100%;
+        height: 50%;
+
+        .mini-event-name-container {
+          left: 0;
+          justify-content: space-evenly;
+          align-items: center;
+          width: 80%;
+          height: 100%;
+          padding: 2.5px 2.5px 2.5px 2.5px;
+
+          .mini-event-name {
+            font-size: 16px;
+          }
+
+          .mini-venue-name {
+            font-size: 14px;
+          }
+        }
+
+        .mini-event-date-container {
+          right: 0;
+          flex-direction: column;
+          justify-content: space-evenly;
+          width: 20%;
+          height: 100%;
+
+          .mini-date-month {
+            font-size: 20px;
+            margin-top: 2.5px;
+          }
+
+          .mini-date-day {
+            font-size: 30px;
+            margin-bottom: 2.5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+  .mini-event-container {
+    .mini-event-image-container {
+      .mini-event-info-container {
+        bottom: 0px;
+        flex-direction: row;
+        width: 100%;
+        height: 50%;
+
+        .mini-event-name-container {
+          left: 0;
+          justify-content: space-evenly;
+          align-items: center;
+          width: 80%;
+          height: 100%;
+          padding: 2.5px 2.5px 2.5px 2.5px;
+
+          .mini-event-name {
+            font-size: 16px;
+          }
+
+          .mini-venue-name {
+            font-size: 14px;
+          }
+        }
+
+        .mini-event-date-container {
+          right: 0;
+          flex-direction: column;
+          justify-content: space-evenly;
+          width: 20%;
+          height: 100%;
+
+          .mini-date-month {
+            font-size: 20px;
+            margin-top: 2.5px;
+          }
+
+          .mini-date-day {
+            font-size: 30px;
+            margin-bottom: 2.5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 414px) and (max-width: 599px) {
+  .mini-event-container {
+    .mini-event-image-container {
+      .mini-event-info-container {
+        bottom: 0px;
+        flex-direction: row;
+        width: 100%;
+        height: 40%;
+
+        .mini-event-name-container {
+          left: 0;
+          justify-content: space-evenly;
+          align-items: center;
+          width: 80%;
+          height: 100%;
+          padding: 2.5px 2.5px 2.5px 2.5px;
+
+          .mini-event-name {
+            font-size: 16px;
+          }
+
+          .mini-venue-name {
+            font-size: 14px;
+          }
+        }
+
+        .mini-event-date-container {
+          right: 0;
+          flex-direction: column;
+          justify-content: space-evenly;
+          width: 20%;
+          height: 100%;
+
+          .mini-date-month {
+            font-size: 20px;
+            margin-top: 2.5px;
+          }
+
+          .mini-date-day {
+            font-size: 30px;
+            margin-bottom: 2.5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 360px) and (max-width: 413px) {
+  .mini-event-container {
+    .mini-event-image-container {
+      .mini-event-info-container {
+        bottom: 0px;
+        flex-direction: row;
+        width: 100%;
+        height: 40%;
+
+        .mini-event-name-container {
+          left: 0;
+          justify-content: space-evenly;
+          align-items: center;
+          width: 80%;
+          height: 100%;
+          padding: 2.5px 2.5px 2.5px 2.5px;
+
+          .mini-event-name {
+            font-size: 16px;
+          }
+
+          .mini-venue-name {
+            font-size: 14px;
+          }
+        }
+
+        .mini-event-date-container {
+          right: 0;
+          flex-direction: column;
+          justify-content: space-evenly;
+          width: 20%;
+          height: 100%;
+
+          .mini-date-month {
+            font-size: 20px;
+            margin-top: 2.5px;
+          }
+
+          .mini-date-day {
+            font-size: 30px;
+            margin-bottom: 2.5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 359px) {
+  .mini-event-container {
+    .mini-event-image-container {
+      .mini-event-info-container {
+        bottom: 0px;
+        flex-direction: row;
+        width: 100%;
+        height: 40%;
+
+        .mini-event-name-container {
+          left: 0;
+          justify-content: space-evenly;
+          align-items: center;
+          width: 80%;
+          height: 100%;
+          padding: 2.5px 2.5px 2.5px 2.5px;
+
+          .mini-event-name {
+            font-size: 16px;
+          }
+
+          .mini-venue-name {
+            font-size: 14px;
+          }
+        }
+
+        .mini-event-date-container {
+          right: 0;
+          flex-direction: column;
+          justify-content: space-evenly;
+          width: 20%;
+          height: 100%;
+
+          .mini-date-month {
+            font-size: 20px;
+            margin-top: 2.5px;
+          }
+
+          .mini-date-day {
+            font-size: 30px;
+            margin-bottom: 2.5px;
+          }
+        }
+      }
+    }
+  }
 }

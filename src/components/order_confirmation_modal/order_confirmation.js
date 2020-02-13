@@ -274,20 +274,24 @@ class OrderConfirmation extends Component {
               </div>
             </div>
             <div className='modal-buyer-info'>
-              <p className='buyer-name'>Name:</p>
-              <input
-                className='buyer-inputs'
-                value={userName}
-                onChange={this.buyerInputChange}
-                name='userName'
-              />
-              <p className='buyer-email'>Email:</p>
-              <input
-                className='buyer-inputs'
-                value={userEmail}
-                onChange={this.buyerInputChange}
-                name='userEmail'
-              />
+              <div className='buyer-name-container'>
+                <p className='buyer-name'>Name:</p>
+                <input
+                  className='buyer-name-input'
+                  value={userName}
+                  onChange={this.buyerInputChange}
+                  name='userName'
+                />
+              </div>
+              <div className='buyer-email-container'>
+                <p className='buyer-email'>Email:</p>
+                <input
+                  className='buyer-email-input'
+                  value={userEmail}
+                  onChange={this.buyerInputChange}
+                  name='userEmail'
+                />
+              </div>
             </div>
             <div className='stripe-checkout-form'>
               <StripeCheckout
