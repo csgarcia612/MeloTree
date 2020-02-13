@@ -16,6 +16,7 @@ class Header extends Component {
     this.login = this.login.bind(this);
     this.loginWarning = this.loginWarning.bind(this);
     this.addClassFunOne = this.addClassFunOne.bind(this);
+    this.clearSessionStorage = this.clearSessionStorage.bind(this);
   }
 
   componentDidMount() {
@@ -26,33 +27,15 @@ class Header extends Component {
   }
 
   login(req, res) {
-    console.log('***Window History : ', window.history.state);
+    // console.log('***window.location.href : ', window.location.href);
 
-    let refererInfo = null;
+    let refererURL = window.location.href;
 
     let redirectUri = encodeURIComponent(
       window.location.origin + '/auth/callback'
     );
 
-    if (window.location.pathname.includes('event')) {
-      let refererObj = this.props.location.state;
-
-      refererObj.href = window.location.href;
-
-      console.log('***refererObj : ', refererObj);
-
-      refererInfo = JSON.stringify(refererObj);
-
-      window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererInfo}&response_type=code`;
-    } else if (window.location.pathname.includes('search')) {
-      let searchResultsState = {};
-
-      window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererInfo}&response_type=code`;
-    } else {
-      refererInfo = window.location.href;
-
-      window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererInfo}&response_type=code`;
-    }
+    window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererURL}&response_type=code`;
   }
 
   logout = () => {
@@ -60,6 +43,14 @@ class Header extends Component {
       this.props.setUser(null);
 
       this.props.history.push('/');
+
+      if (window.sessionStorage.length > 0) {
+        // console.log('***window.sessionStorage 1 : ', window.sessionStorage);
+
+        window.sessionStorage.clear();
+
+        // console.log('***window.sessionStorage 2 : ', window.sessionStorage);
+      }
     });
   };
 
@@ -68,6 +59,16 @@ class Header extends Component {
       showMenu: false,
       showLoginWarning: !this.state.showLoginWarning
     });
+  }
+
+  clearSessionStorage() {
+    if (window.sessionStorage.length > 0) {
+      // console.log('***window.sessionStorage 1 : ', window.sessionStorage);
+
+      window.sessionStorage.clear();
+
+      // console.log('***window.sessionStorage 2 : ', window.sessionStorage);
+    }
   }
 
   addClassFunOne() {
@@ -145,16 +146,22 @@ class Header extends Component {
                     <span />
                   </li>
                   <li>
-                    <a href='/'>Home</a>
+                    <a href='/' onClick={this.clearSessionStorage}>
+                      Home
+                    </a>
                   </li>
                   <li>
-                    <a href='/profile'>Profile</a>
+                    <a href='/profile' onClick={this.clearSessionStorage}>
+                      Profile
+                    </a>
                   </li>
                   {/* <li>
 									<a href='/contact'>Contact</a>
 								</li> */}
                   <li>
-                    <a href='/about'>About</a>
+                    <a href='/about' onClick={this.clearSessionStorage}>
+                      About
+                    </a>
                   </li>
                 </ul>
                 <div className='log-btn-container'>
@@ -167,13 +174,17 @@ class Header extends Component {
               <>
                 <ul>
                   <li>
-                    <a href='/'>Home</a>
+                    <a href='/' onClick={this.clearSessionStorage}>
+                      Home
+                    </a>
                   </li>
                   {/* <li>
                     <a href='/contact'>Contact</a>
                   </li> */}
                   <li>
-                    <a href='/about'>About</a>
+                    <a href='/about' onClick={this.clearSessionStorage}>
+                      About
+                    </a>
                   </li>
                 </ul>
                 <div className='log-btn-container'>

@@ -47,10 +47,78 @@ class search_results extends Component {
   componentDidMount() {
     // console.log('***Search Results Props: ', this.props);
 
+    console.log('***window.sessionStorage : ', window.sessionStorage);
+
     this.setSearchInput();
   }
 
+  componentWillUpdate() {
+    const {
+      currentCity,
+      startDate,
+      endDate,
+      radius,
+      genreName,
+      genreId,
+      currentPage,
+      totalPages
+    } = this.state;
+
+    let resultsObj = {
+      currentCity: `${currentCity}`,
+      startDate: `${startDate}`,
+      endDate: `${endDate}`,
+      radius: `${radius}`,
+      genreName: `${genreName}`,
+      genreId: `${genreId}`,
+      currentPage: `${currentPage}`,
+      totalPages: `${totalPages}`
+    };
+
+    // console.log('***resultsObj : ', resultsObj);
+
+    // console.log('***JSON-resultsObj : ', JSON.stringify(resultsObj));
+
+    window.sessionStorage.setItem('stateInfo', JSON.stringify(resultsObj));
+
+    console.log('***window.sessionStorage : ', window.sessionStorage);
+  }
+
+  // componentWillUnmount() {
+  //   const {
+  //     currentCity,
+  //     startDate,
+  //     endDate,
+  //     radius,
+  //     genreName,
+  //     genreId,
+  //     currentPage,
+  //     totalPages
+  //   } = this.state;
+
+  //   let resultsObj = {
+  //     currentCity: `${currentCity}`,
+  //     startDate: `${startDate}`,
+  //     endDate: `${endDate}`,
+  //     radius: `${radius}`,
+  //     genreName: `${genreName}`,
+  //     genreId: `${genreId}`,
+  //     currentPage: `${currentPage}`,
+  //     totalPages: `${totalPages}`
+  //   };
+
+  //   // console.log('***resultsObj : ', resultsObj);
+
+  //   // console.log('***JSON-resultsObj : ', JSON.stringify(resultsObj));
+
+  //   window.sessionStorage.setItem('stateInfo', JSON.stringify(resultsObj));
+
+  //   console.log('***window.sessionStorage : ', window.sessionStorage);
+  // }
+
   setSearchInput() {
+    console.log('***props.match.params : ', this.props.match.params);
+
     const { params } = this.props.match;
 
     // console.log('params.location--', params.location);
@@ -121,16 +189,25 @@ class search_results extends Component {
 
     let endDate = `${year}-${month}-${day}`;
 
-    if (this.props.location && this.props.location.state) {
+    if (window.sessionStorage.length > 0) {
+      let sessionStorageObj = JSON.parse(
+        window.sessionStorage.getItem('stateInfo')
+      );
+
+      console.log(
+        '***setSearchInput - sessionStorage : ',
+        JSON.parse(window.sessionStorage.getItem('stateInfo'))
+      );
+
       this.setState(
         {
-          currentCity: this.props.location.state.currentCity,
-          startDate: this.props.location.state.startDate,
+          currentCity: sessionStorageObj.currentCity,
+          startDate: sessionStorageObj.startDate,
           startTime: currentTime,
-          endDate: this.props.location.state.endDate,
-          radius: this.props.location.state.radius,
-          genreName: this.props.location.state.genreName,
-          genreId: this.props.location.state.genreId,
+          endDate: sessionStorageObj.endDate,
+          radius: sessionStorageObj.radius,
+          genreName: sessionStorageObj.genreName,
+          genreId: sessionStorageObj.genreId,
           searchInput: params.location,
           formatedCityName: urlCityName
         },
@@ -138,7 +215,35 @@ class search_results extends Component {
 
         () => this.searchEvents()
       );
+      // } else if (
+      //   window.sessionStorage.length === 0 &&
+      //   this.props.location &&
+      //   this.props.location.state
+      // ) {
+      //   console.log(
+      //     '***setSearchInput - props.location.state : ',
+      //     this.props.location.state
+      //   );
+
+      //   this.setState(
+      //     {
+      //       currentCity: this.props.location.state.currentCity,
+      //       startDate: this.props.location.state.startDate,
+      //       startTime: currentTime,
+      //       endDate: this.props.location.state.endDate,
+      //       radius: this.props.location.state.radius,
+      //       genreName: this.props.location.state.genreName,
+      //       genreId: this.props.location.state.genreId,
+      //       searchInput: params.location,
+      //       formatedCityName: urlCityName
+      //     },
+      //     // () => console.log('searchState-After--', this.state)
+
+      //     () => this.searchEvents()
+      //   );
     } else {
+      console.log('***setSearchInput - no props or sessionStorage : ');
+
       this.setState(
         {
           currentCity: params.location,

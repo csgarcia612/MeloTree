@@ -4,25 +4,7 @@ const axios = require('axios'),
 
 module.exports = {
   login: (req, res) => {
-    console.log('***req.query: ', req.query);
-
-    let reqState = null;
-
-    let reqStateType = '';
-
-    if (typeof JSON.parse(req.query.state) == 'object') {
-      reqStateType = typeof JSON.parse(req.query.state);
-
-      reqState = JSON.parse(req.query.state);
-    } else {
-      reqStateType = typeof req.query.state;
-
-      reqState = req.query.state;
-    }
-
-    console.log('***reqState : ', reqState);
-
-    console.log('***reqStateType : ', reqStateType);
+    // console.log('***req.query: ', req.query);
 
     let redirect_uri =
       process.env.HOST == 'localhost'
@@ -80,15 +62,7 @@ module.exports = {
 
           // console.log('***req.session: ', req.session);
 
-          // res.status(200).redirect(req.query.state);
-
-          if (reqStateType == 'object') {
-            console.log('***resObj : ', reqState.href);
-
-            res.status(200).redirect(reqState.href);
-          } else {
-            res.status(200).redirect(reqState);
-          }
+          res.status(200).redirect(req.query.state);
         } else {
           let splitName = user.name.split(' ');
           if (splitName.length === 1) {
@@ -109,7 +83,7 @@ module.exports = {
               // console.log('*** newlyCreateUser', newlyCreateUser);
               req.session.user = newlyCreateUser[0];
               // console.log('***req.session', req.session);
-              res.send(200).redirect(req.query.state);
+              res.status(200).redirect(req.query.state);
             })
             .catch(error => {
               console.log(('***error in create_user: ', error));

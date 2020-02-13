@@ -13,7 +13,15 @@ class EventDetails extends Component {
       eventNum: 0,
       singleEvent: null,
       ticketPrice: 0,
-      showModal: false
+      showModal: false,
+      searchResults: {
+        currentCity: '',
+        startDate: '',
+        endDate: '',
+        radius: '',
+        genreName: '',
+        genreId: ''
+      }
     };
     this.getEvent = this.getEvent.bind(this);
     this.getTime = this.getTime.bind(this);
@@ -23,9 +31,7 @@ class EventDetails extends Component {
   }
 
   componentDidMount() {
-    console.log('props', this.props);
-
-    console.log('***history : ', window.history);
+    // console.log('props', this.props);
 
     this.getEvent();
     this.getPrice();
@@ -48,9 +54,24 @@ class EventDetails extends Component {
       )
       .then(res => {
         // console.log('res.data', res.data);
+
+        let sessionStorageObj = JSON.parse(
+          window.sessionStorage.getItem('stateInfo')
+        );
+
         this.setState({
-          singleEvent: res.data
+          singleEvent: res.data,
+          searchResults: {
+            currentCity: sessionStorageObj.currentCity,
+            startDate: sessionStorageObj.startDate,
+            endDate: sessionStorageObj.endDate,
+            radius: sessionStorageObj.radius,
+            genreName: sessionStorageObj.genreName,
+            genreId: sessionStorageObj.genreId
+          }
         });
+
+        // console.log('***this.state : ', this.state);
       });
   }
 
@@ -114,6 +135,11 @@ class EventDetails extends Component {
   }
 
   render() {
+    // console.log(
+    //   '***sessionStorage : ',
+    //   JSON.parse(window.sessionStorage.getItem('stateInfo'))
+    // );
+
     const { singleEvent, ticketPrice } = this.state;
 
     const {
@@ -123,7 +149,7 @@ class EventDetails extends Component {
       radius,
       genreName,
       genreId
-    } = this.props.location.state;
+    } = this.state.searchResults;
 
     let location =
       singleEvent &&
