@@ -289,7 +289,7 @@ class search_results extends Component {
             this.props.setEvents(res.data);
 
             this.setState({
-              currentPage: res.data.page.number + 1,
+              currentPage: res.data.page.number,
               totalPages: res.data.page.totalPages
             });
           }
@@ -308,6 +308,7 @@ class search_results extends Component {
           currentPage: prevState.currentPage + 1
         },
         () => {
+          // console.log('***nextPage-btn : ', this.state.currentPage);
           this.searchEvents();
         }
       );
@@ -319,6 +320,7 @@ class search_results extends Component {
           currentPage: prevState.currentPage - 1
         },
         () => {
+          // console.log('***prevPage-btn : ', this.state.currentPage);
           this.searchEvents();
         }
       );
@@ -951,14 +953,14 @@ class search_results extends Component {
           <div className='page-btns-container'>
             <button
               className='page-btn'
-              disabled={currentPage === 1 ? true : false}
+              disabled={currentPage === 0 ? true : false}
               onClick={() => this.changePage('prev')}
             >
               Previous
             </button>
             <button
               className='page-btn'
-              disabled={currentPage === totalPages ? true : false}
+              disabled={currentPage === totalPages - 1 ? true : false}
               onClick={() => this.changePage('next')}
             >
               Next
