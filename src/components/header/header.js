@@ -51,6 +51,8 @@ class Header extends Component {
 
         // console.log('***window.sessionStorage 2 : ', window.sessionStorage);
       }
+
+      this.addClassFunOne();
     });
   };
 

@@ -290,7 +290,8 @@ class search_results extends Component {
 
             this.setState({
               currentPage: res.data.page.number,
-              totalPages: res.data.page.totalPages
+              totalPages: res.data.page.totalPages,
+              showFilters: false
             });
           }
         })
@@ -665,20 +666,13 @@ class search_results extends Component {
         radius: 25,
         genreName: 'All Genres',
         genreId:
-          'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAJ6,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF'
+          'KnvZfZ7vAvv,KnvZfZ7vAve,KnvZfZ7vAvd,KnvZfZ7vAvA,KnvZfZ7vAvk,KnvZfZ7vAeJ,KnvZfZ7vAv6,KnvZfZ7vAvF,KnvZfZ7vAva,KnvZfZ7vAv1,KnvZfZ7vAvJ,KnvZfZ7vAvE,KnvZfZ7vAJ6,KnvZfZ7vAvI,KnvZfZ7vAvt,KnvZfZ7vAvn,KnvZfZ7vAvl,KnvZfZ7vAev,KnvZfZ7vAee,KnvZfZ7vAed,KnvZfZ7vAe7,KnvZfZ7vAeA,KnvZfZ7vAeF',
+        currentPage: 0,
+        showFilters: false
+      },
+      () => {
+        this.searchEvents();
       }
-      // ,
-      // () => {
-      //   console.log('***New Filter Values : ', {
-      //     startDate: this.state.startDate,
-      //     startTime: this.state.startTime,
-      //     endDate: this.state.endDate,
-      //     endTime: this.state.endTime,
-      //     radius: this.state.radius,
-      //     genreName: this.state.genreName,
-      //     genreId: this.state.genreId
-      //   });
-      // }
     );
   }
 
