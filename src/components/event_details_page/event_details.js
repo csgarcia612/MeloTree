@@ -153,6 +153,9 @@ class EventDetails extends Component {
 
     let location =
       singleEvent &&
+      singleEvent._embedded.venues[0].location &&
+      singleEvent._embedded.venues[0].location.latitude &&
+      singleEvent._embedded.venues[0].location.longitude &&
       `${singleEvent._embedded.venues[0].location.latitude}, ${singleEvent._embedded.venues[0].location.longitude}`;
 
     let splitEventName =

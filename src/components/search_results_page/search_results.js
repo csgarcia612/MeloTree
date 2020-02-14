@@ -32,6 +32,7 @@ class search_results extends Component {
     };
     this.setSearchInput = this.setSearchInput.bind(this);
     this.searchEvents = this.searchEvents.bind(this);
+    this.changePage = this.changePage.bind(this);
     this.getCitySuggestions = this.getCitySuggestions.bind(this);
     this.updateSearchInput = this.updateSearchInput.bind(this);
     this.hoveredCity = this.hoveredCity.bind(this);
@@ -47,12 +48,12 @@ class search_results extends Component {
   componentDidMount() {
     // console.log('***Search Results Props: ', this.props);
 
-    console.log('***window.sessionStorage : ', window.sessionStorage);
+    // console.log('***window.sessionStorage : ', window.sessionStorage);
 
     this.setSearchInput();
   }
 
-  componentWillUpdate() {
+  componentDidUpdate() {
     const {
       currentCity,
       startDate,
@@ -81,7 +82,7 @@ class search_results extends Component {
 
     window.sessionStorage.setItem('stateInfo', JSON.stringify(resultsObj));
 
-    console.log('***window.sessionStorage : ', window.sessionStorage);
+    // console.log('***window.sessionStorage : ', window.sessionStorage);
   }
 
   // componentWillUnmount() {
@@ -117,7 +118,7 @@ class search_results extends Component {
   // }
 
   setSearchInput() {
-    console.log('***props.match.params : ', this.props.match.params);
+    // console.log('***props.match.params : ', this.props.match.params);
 
     const { params } = this.props.match;
 
@@ -194,10 +195,10 @@ class search_results extends Component {
         window.sessionStorage.getItem('stateInfo')
       );
 
-      console.log(
-        '***setSearchInput - sessionStorage : ',
-        JSON.parse(window.sessionStorage.getItem('stateInfo'))
-      );
+      // console.log(
+      //   '***setSearchInput - sessionStorage : ',
+      //   JSON.parse(window.sessionStorage.getItem('stateInfo'))
+      // );
 
       this.setState(
         {
@@ -242,7 +243,7 @@ class search_results extends Component {
       //     () => this.searchEvents()
       //   );
     } else {
-      console.log('***setSearchInput - no props or sessionStorage : ');
+      // console.log('***setSearchInput - no props or sessionStorage : ');
 
       this.setState(
         {
@@ -286,11 +287,42 @@ class search_results extends Component {
             this.props.setEvents(null);
           } else {
             this.props.setEvents(res.data);
+
+            this.setState({
+              currentPage: res.data.page.number + 1,
+              totalPages: res.data.page.totalPages
+            });
           }
         })
         .catch(error => {
           // console.log('---error in search', error);
         });
+  }
+
+  changePage(action) {
+    if (action === 'next') {
+      let prevState = this.state;
+
+      this.setState(
+        {
+          currentPage: prevState.currentPage + 1
+        },
+        () => {
+          this.searchEvents();
+        }
+      );
+    } else if (action === 'prev') {
+      let prevState = this.state;
+
+      this.setState(
+        {
+          currentPage: prevState.currentPage - 1
+        },
+        () => {
+          this.searchEvents();
+        }
+      );
+    }
   }
 
   getCitySuggestions(event) {
@@ -678,6 +710,8 @@ class search_results extends Component {
       radius,
       genreName,
       genreId,
+      currentPage,
+      totalPages,
       searchInput,
       filteredCities,
       showSuggestedCities,
@@ -906,12 +940,30 @@ class search_results extends Component {
             </div>
           </div>
         </div>
-        <div className='events-list'>
-          {eventsList ? (
-            eventsList
-          ) : (
-            <p className='no-results-msg'>No Events Found</p>
-          )}
+        <div className='events-list-main-container'>
+          <div className='events-list'>
+            {eventsList ? (
+              eventsList
+            ) : (
+              <p className='no-results-msg'>No Events Found</p>
+            )}
+          </div>
+          <div className='page-btns-container'>
+            <button
+              className='page-btn'
+              disabled={currentPage === 1 ? true : false}
+              onClick={() => this.changePage('prev')}
+            >
+              Previous
+            </button>
+            <button
+              className='page-btn'
+              disabled={currentPage === totalPages ? true : false}
+              onClick={() => this.changePage('next')}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     );
