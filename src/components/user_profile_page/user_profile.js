@@ -87,8 +87,8 @@ class UserProfile extends Component {
     const getUser = auth0_id => (
       <Query query={GET_USER} variables={{ auth0_id }}>
         {({ loading, error, data }) => {
-          if (loading) return <h1>Loading data...</h1>;
-          if (error) return <h1>Error!</h1>;
+          if (loading) return <h1>Loading Data...</h1>;
+          if (error) return <h1>Server Connection Error</h1>;
 
           // console.log('data', data);
 
