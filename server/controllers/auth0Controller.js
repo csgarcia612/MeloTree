@@ -16,7 +16,7 @@ module.exports = {
       client_secret: process.env.AUTH0_CLIENT_SECRET,
       code: req.query.code,
       grant_type: 'authorization_code',
-      redirect_uri
+      redirect_uri,
     };
 
     // console.log('***payload: ', payload);
@@ -45,7 +45,7 @@ module.exports = {
       // console.log('***user: ', user);
       // console.log('***db: ', db);
 
-      return db.get_user_auth0([user.sub]).then(newUser => {
+      return db.get_user_auth0([user.sub]).then((newUser) => {
         // console.log('testing', user.sub);
         // console.log('***newUser Info: ', newUser);
 
@@ -57,7 +57,7 @@ module.exports = {
             first_name: newUser[0].first_name,
             last_name: newUser[0].last_name,
             email: newUser[0].email,
-            image_url: newUser[0].image_url
+            image_url: newUser[0].image_url,
           };
 
           // console.log('***req.session: ', req.session);
@@ -77,15 +77,15 @@ module.exports = {
               splitName[0],
               splitName[1],
               user.email,
-              user.image_url || user.picture
+              user.image_url || user.picture,
             ])
-            .then(newlyCreateUser => {
+            .then((newlyCreateUser) => {
               // console.log('*** newlyCreateUser', newlyCreateUser);
               req.session.user = newlyCreateUser[0];
               // console.log('***req.session', req.session);
               res.status(200).redirect(req.query.state);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(('***error in create_user: ', error));
             });
         }
@@ -95,7 +95,7 @@ module.exports = {
     codeForAccessToken()
       .then(accessTokenForUserInfo)
       .then(storeUserInfo)
-      .catch(error => {
+      .catch((error) => {
         console.log('***error with login: ', error);
         res.status(500).send('something went wrong on the server.');
       });
@@ -104,5 +104,5 @@ module.exports = {
   logout: (req, res) => {
     req.session.destroy();
     res.send('Logged Out Successfully');
-  }
+  },
 };

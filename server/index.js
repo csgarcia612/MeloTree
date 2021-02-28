@@ -18,26 +18,32 @@ dotenv.config();
 
 app.use(bodyParser.json());
 
-// massive({
-//   host: `${process.env.PG_HOST}`,
-//   port: process.env.PG_PORT,
-//   database: `${process.env.PG_DATABASE}`,
-//   user: `${process.env.PG_USER}`,
-//   password: `${process.env.PG_SECRET}`,
-//   ssl: true,
-//   // ssl: {
-//   //   rejectUnauthorized: true
-//   // }
-//   rejectUnauthorized: true
-// })
-massive(process.env.CONNECTION_STRING)
-  .then(db => {
+massive({
+  host: 'ec2-54-243-240-104.compute-1.amazonaws.com',
+  port: 5432,
+  database: 'd7jatvro402tc2',
+  user: 'gnftrninahawmy',
+  password: '9bf23a1678c5ac4208f843e45552b0365d56a5f074b6cc9e38f9d3e731cfba5e',
+  ssl: {
+    rejectUnauthorized: false,
+  },
+})
+  .then((db) => {
     exports.database = db;
     console.log('Database Connection : ONLINE');
   })
-  .catch(error => {
+  .catch((error) => {
     console.log(('😡 Error with Massive DB Connection 😡', error));
   });
+
+// massive(process.env.CONNECTION_STRING)
+//   .then((db) => {
+//     exports.database = db;
+//     console.log('Database Connection : ONLINE');
+//   })
+//   .catch((error) => {
+//     console.log(('😡 Error with Massive DB Connection 😡', error));
+//   });
 
 app.use(cors());
 
@@ -46,13 +52,13 @@ app.use(
   graphqlHTTP({
     schema: gqlConfigs.schema,
     rootValue: gqlConfigs.root,
-    graphiql: true
+    graphiql: true,
   })
 );
 
 let client = redis.createClient(process.env.REDIS_URI);
 
-client.on('error', error => {
+client.on('error', (error) => {
   console.log('***Redis Error: ', error);
 });
 
@@ -62,7 +68,7 @@ app.use(
     secret: process.env.REDIS_SECRET,
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 2 }
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 2 },
   })
 );
 
