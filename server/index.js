@@ -19,11 +19,11 @@ dotenv.config();
 app.use(bodyParser.json());
 
 massive({
-  host: 'ec2-54-243-240-104.compute-1.amazonaws.com',
-  port: 5432,
-  database: 'd7jatvro402tc2',
-  user: 'gnftrninahawmy',
-  password: '9bf23a1678c5ac4208f843e45552b0365d56a5f074b6cc9e38f9d3e731cfba5e',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_DATABASE,
+  user: process.env.DB_USER,
+  password: process.env.DB_SECRET,
   ssl: {
     rejectUnauthorized: false,
   },
