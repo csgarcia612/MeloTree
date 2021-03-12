@@ -56,7 +56,17 @@ app.use(
   })
 );
 
-let client = redis.createClient(process.env.REDIS_URI);
+// let client = redis.createClient(process.env.REDIS_URI);
+
+let client = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  user: process.env.REDIS_USER,
+  password: process.env.REDIS_SECRET,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
 client.on('error', (error) => {
   console.log('***Redis Error: ', error);
