@@ -8,8 +8,8 @@ module.exports = {
 
     let redirect_uri =
       process.env.HOST == 'localhost'
-        ? `http://${req.headers.host}/callback`
-        : `https://${req.headers.host}/callback`;
+        ? `http://${req.headers.host}/auth/callback`
+        : `https://${req.headers.host}/auth/callback`;
 
     const payload = {
       client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,

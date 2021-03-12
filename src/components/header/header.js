@@ -11,7 +11,7 @@ class Header extends Component {
     super();
     this.state = {
       showMenu: false,
-      showLoginWarning: false
+      showLoginWarning: false,
     };
     this.login = this.login.bind(this);
     this.loginWarning = this.loginWarning.bind(this);
@@ -20,15 +20,13 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/user-data').then(res => {
+    axios.get('/api/user-data').then((res) => {
       // console.log('res', res);
       this.props.setUser(res.data.user);
     });
   }
 
   login(req, res) {
-    // console.log('***window.location.href : ', window.location.href);
-
     let refererURL = window.location.href;
 
     let redirectUri = encodeURIComponent(
@@ -39,7 +37,7 @@ class Header extends Component {
   }
 
   logout = () => {
-    axios.post('/api/logout').then(res => {
+    axios.post('/api/logout').then((res) => {
       this.props.setUser(null);
 
       this.props.history.push('/');
@@ -59,7 +57,7 @@ class Header extends Component {
   loginWarning() {
     this.setState({
       showMenu: false,
-      showLoginWarning: !this.state.showLoginWarning
+      showLoginWarning: !this.state.showLoginWarning,
     });
   }
 
@@ -75,7 +73,7 @@ class Header extends Component {
 
   addClassFunOne() {
     this.setState({
-      showMenu: !this.state.showMenu
+      showMenu: !this.state.showMenu,
     });
   }
 
@@ -211,14 +209,14 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = {
-  setUser: setUser
+  setUser: setUser,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

@@ -1,5 +1,5 @@
 const express = require('express'),
-  bodyParser = require('body-parser'),
+  // bodyParser = require('body-parser'),
   session = require('express-session'),
   massive = require('massive'),
   app = express(),
@@ -16,7 +16,9 @@ const express = require('express'),
 
 dotenv.config();
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+
+app.use(express.json());
 
 massive({
   host: process.env.DB_HOST,
@@ -63,10 +65,14 @@ let client = redis.createClient({
   port: process.env.REDIS_PORT,
   user: process.env.REDIS_USER,
   password: process.env.REDIS_SECRET,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
 });
+
+// client.on('ready', () => {
+//   console.log('Redis Connection : ONLINE');
+// });
 
 client.on('error', (error) => {
   console.log('***Redis Error: ', error);
