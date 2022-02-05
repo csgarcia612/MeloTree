@@ -17,7 +17,7 @@ class OrderConfirmation extends Component {
       userEmail: '',
       ticketPrice: 0,
       ticketQuantity: 1,
-      taxRate: 0.09
+      taxRate: 0.09,
     };
     this.fillUserData = this.fillUserData.bind(this);
     this.increaseQuantity = this.increaseQuantity.bind(this);
@@ -47,7 +47,7 @@ class OrderConfirmation extends Component {
     this.setState({
       userName: `${this.props.user.first_name} ${this.props.user.last_name}`,
       userEmail: `${this.props.user.email}`,
-      ticketPrice: this.props.purchaseInfo.ticketPrice
+      ticketPrice: this.props.purchaseInfo.ticketPrice,
     });
   }
 
@@ -55,7 +55,7 @@ class OrderConfirmation extends Component {
     let higherQuantity = this.state.ticketQuantity + 1;
 
     this.setState({
-      ticketQuantity: higherQuantity
+      ticketQuantity: higherQuantity,
     });
   }
 
@@ -63,46 +63,51 @@ class OrderConfirmation extends Component {
     let lowerQuantity = this.state.ticketQuantity - 1;
 
     this.setState({
-      ticketQuantity: lowerQuantity
+      ticketQuantity: lowerQuantity,
     });
   }
 
   buyerInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
-  onToken = token => {
+  onToken = (token) => {
     // console.log('stripe token:', token);
 
     const recipient = {
       auth0_id: this.props.user.auth0_id,
       name: this.state.userName,
       to: this.state.userEmail,
-      subject: `Thank you ${this.state.userName} for your recent ticket purchase on MeloTree`
+      subject: `Thank you ${this.state.userName} for your recent ticket purchase on MeloTree`,
       // price: this.total(),
       // cart: this.props.cartProducts
     };
 
     const creditCharge = {
       token,
-      state: this.state
+      state: this.state,
     };
     // console.log("creditCharge", creditCharge);
     axios
       .post('/api/stripe', creditCharge)
-      .then(res => {
+      .then((res) => {
         // console.log('stripe response from server', res);
-        axios.post('/api/nodemailer', recipient).then(res => {
+        axios.post('/api/nodemailer', recipient).then((res) => {
           // console.log('nodemailer response', res);
-          return alert(
-            'Payment successful! Check your email for order confirmation receipt'
-          );
+          // return alert(
+          //   'Payment successful! Check your email for order confirmation receipt'
+          // );
         });
-        this.props.history.push('/');
+        // this.props.history.push('/');
       })
-      .catch(error => {
+      .then((res) => {
+        alert(
+          'Payment successful! Check your email for order confirmation receipt'
+        );
+      })
+      .catch((error) => {
         console.log('Error with front end credit processing', error);
       });
   };
@@ -133,13 +138,8 @@ class OrderConfirmation extends Component {
     // console.log('user-props', this.props.user);
     // console.log('order-confirm-state', this.state);
 
-    const {
-      userName,
-      userEmail,
-      ticketPrice,
-      ticketQuantity,
-      taxRate
-    } = this.state;
+    const { userName, userEmail, ticketPrice, ticketQuantity, taxRate } =
+      this.state;
 
     let totalPriceInPennies =
       (ticketPrice * ticketQuantity * taxRate + ticketPrice * ticketQuantity) *
@@ -147,7 +147,7 @@ class OrderConfirmation extends Component {
 
     let modalGuestList =
       this.props.purchaseInfo.guestArtists &&
-      this.props.purchaseInfo.guestArtists.map(artist => {
+      this.props.purchaseInfo.guestArtists.map((artist) => {
         // console.log("artist", artist);
         return (
           <p key={artist.id} className='guest-artist'>
@@ -231,12 +231,13 @@ class OrderConfirmation extends Component {
                       : ''}
                   </p>
                   <p className='modal-venue-city-state-zip'>{`${this.props.purchaseInfo.event._embedded.venues[0].city.name}, ${this.props.purchaseInfo.event._embedded.venues[0].state.stateCode} ${this.props.purchaseInfo.event._embedded.venues[0].postalCode}`}</p>
-                  <p className='modal-venue-phone'>{`${this.props
-                    .purchaseInfo &&
+                  <p className='modal-venue-phone'>{`${
+                    this.props.purchaseInfo &&
                     this.props.purchaseInfo.event._embedded.venues[0]
                       .boxOfficeInfo &&
                     this.props.purchaseInfo.event._embedded.venues[0]
-                      .boxOfficeInfo.phoneNumberDetail}`}</p>
+                      .boxOfficeInfo.phoneNumberDetail
+                  }`}</p>
                 </div>
               </div>
             </div>
@@ -322,14 +323,14 @@ class OrderConfirmation extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = {
-  setUser: setUser
+  setUser: setUser,
 };
 
 export default withRouter(

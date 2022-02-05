@@ -3,11 +3,12 @@ const express = require('express'),
   session = require('express-session'),
   massive = require('massive'),
   app = express(),
-  redis = require('redis'),
-  RedisStore = require('connect-redis')(session),
+  // redis = require('redis'),
+  // RedisStore = require('connect-redis')(session),
   cors = require('cors'),
-  graphqlHTTP = require('express-graphql'),
+  { graphqlHTTP } = require('express-graphql'),
   gqlConfigs = require('./graphql/graphqlConfigs'),
+  connect = require('connect-pg-simple'),
   auth0Controller = require('./controllers/auth0Controller'),
   nodemailerController = require('./controllers/nodemailerController'),
   usersController = require('./controllers/usersController'),
@@ -47,7 +48,7 @@ massive({
 //     console.log(('😡 Error with Massive DB Connection 😡', error));
 //   });
 
-app.use(cors());
+// app.use(cors());
 
 app.use(
   '/graphiql',
@@ -58,33 +59,48 @@ app.use(
   })
 );
 
-// let client = redis.createClient(process.env.REDIS_URI);
-
-let client = redis.createClient({
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-  user: process.env.REDIS_USER,
-  password: process.env.REDIS_SECRET,
-  // ssl: {
-  //   rejectUnauthorized: false,
-  // },
-});
+// let client = redis.createClient(process.env.REDIS_URI, {
+//   tls: { rejectUnauthorized: false },
+// });
 
 // client.on('ready', () => {
 //   console.log('Redis Connection : ONLINE');
 // });
 
-client.on('error', (error) => {
-  console.log('***Redis Error: ', error);
-});
+// client.on('error', (error) => {
+//   console.log('***Redis Connection Error : ', error);
+// });
+
+// app.use(
+//   session({
+//     store: new RedisStore({ client }),
+//     secret: process.env.REDIS_SECRET,
+//     saveUninitialized: false,
+//     resave: false,
+//     cookie: { maxAge: 1000 * 60 * 60 * 24 * 2 },
+//   })
+// );
 
 app.use(
   session({
-    store: new RedisStore({ client }),
-    secret: process.env.REDIS_SECRET,
+    store: new (connect(session))({
+      conObject: {
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        database: process.env.DB_DATABASE,
+        user: process.env.DB_USER,
+        password: process.env.DB_SECRET,
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      },
+    }),
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 2 },
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 2,
+    },
   })
 );
 

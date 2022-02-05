@@ -317,9 +317,12 @@
       }
 
       .login-button {
+        display: flex;
         width: 80%;
         height: 30px;
         margin-bottom: 5%;
+        justify-content: center;
+        align-items: center;
         background-color: rgb(47, 255, 47);
         color: black;
         font-size: 18px;
@@ -343,9 +346,12 @@
       }
 
       .logout-button {
+        display: flex;
         width: 80%;
         height: 30px;
         margin-bottom: 5%;
+        justify-content: center;
+        align-items: center;
         background-color: red;
         color: white;
         font-size: 18px;

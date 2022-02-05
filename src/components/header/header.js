@@ -29,9 +29,15 @@ class Header extends Component {
   login(req, res) {
     let refererURL = window.location.href;
 
+    // console.log('***req : ', req);
+
+    // console.log('***window.location.href : ', window.location.href);
+
     let redirectUri = encodeURIComponent(
       window.location.origin + '/auth/callback'
     );
+
+    // console.log('***redirectUri : ', redirectUri);
 
     window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&state=${refererURL}&response_type=code`;
   }
@@ -150,19 +156,19 @@ class Header extends Component {
                       Home
                     </a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a href='/profile' onClick={this.clearSessionStorage}>
                       Profile
                     </a>
-                  </li>
+                  </li> */}
                   {/* <li>
 									<a href='/contact'>Contact</a>
 								</li> */}
-                  <li>
+                  {/* <li>
                     <a href='/about' onClick={this.clearSessionStorage}>
                       About
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
                 <div className='log-btn-container'>
                   <button className='logout-button' onClick={this.logout}>
@@ -181,11 +187,11 @@ class Header extends Component {
                   {/* <li>
                     <a href='/contact'>Contact</a>
                   </li> */}
-                  <li>
+                  {/* <li>
                     <a href='/about' onClick={this.clearSessionStorage}>
                       About
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
                 <div className='log-btn-container'>
                   <button className='login-button' onClick={this.login}>

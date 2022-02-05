@@ -6,10 +6,12 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import store from './dux/store';
 import { BrowserRouter } from 'react-router-dom';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
-const client = new ApolloClient({ uri: 'http://localhost:4000/graphiql' });
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphiql',
+  cache: new InMemoryCache(),
+});
 
 ReactDOM.render(
   <Provider store={store}>

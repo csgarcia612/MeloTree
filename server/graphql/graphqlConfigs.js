@@ -86,7 +86,7 @@ module.exports = {
         // console.log('==========', user_id)
         const user = await db
           .get_user_profile([auth0_id])
-          .then(response => response[0]);
+          .then((response) => response[0]);
         // console.log('-----', user)
         if (user) {
           user.address = {
@@ -95,14 +95,14 @@ module.exports = {
             address_two: user.address_two,
             city: user.address_city,
             state: user.address_state,
-            zipcode: user.address_zipcode
+            zipcode: user.address_zipcode,
           };
 
           return user;
         } else {
           const user = await db
             .get_user_auth0([auth0_id])
-            .then(response => response[0]);
+            .then((response) => response[0]);
 
           return user;
         }
@@ -112,7 +112,7 @@ module.exports = {
       }
     },
     userUpdate: async ({
-      input: { user_id, username, first_name, last_name, email, image_url }
+      input: { user_id, username, first_name, last_name, email, image_url },
     }) => {
       try {
         const db = index.database;
@@ -123,9 +123,9 @@ module.exports = {
             first_name,
             last_name,
             email,
-            image_url
+            image_url,
           })
-          .then(response => response[0]);
+          .then((response) => response[0]);
 
         //     user.address = {
         //         address_id: user.address_id,
@@ -150,8 +150,8 @@ module.exports = {
         city,
         state,
         zipcode,
-        user_id
-      }
+        user_id,
+      },
     }) => {
       try {
         const db = index.database;
@@ -164,9 +164,9 @@ module.exports = {
               city,
               state,
               zipcode,
-              user_id
+              user_id,
             })
-            .then(response => response[0]);
+            .then((response) => response[0]);
           // console.log('address update address', address);
 
           address.user_id = {
@@ -174,7 +174,7 @@ module.exports = {
             first_name: address.first_name,
             last_name: address.last_name,
             email: address.email,
-            image_url: address.image_url
+            image_url: address.image_url,
           };
           return address;
         } else {
@@ -186,16 +186,16 @@ module.exports = {
               city,
               state,
               zipcode,
-              user_id
+              user_id,
             })
-            .then(response => response[0]);
+            .then((response) => response[0]);
           // console.log('add adress ', address);
           address.user_id = {
             username: address.username,
             first_name: address.first_name,
             last_name: address.last_name,
             email: address.email,
-            image_url: address.image_url
+            image_url: address.image_url,
           };
           return address;
         }
@@ -224,6 +224,6 @@ module.exports = {
         console.log('error in delete user'), error;
         throw new Error(error.message);
       }
-    }
-  }
+    },
+  },
 };

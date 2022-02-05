@@ -6,7 +6,7 @@ import {
   UPDATE_USER,
   DELETE_USER,
 } from './graphqlController';
-import { useQuery, useMutation } from '@apollo/client';
+import { Query, Mutation } from 'react-apollo';
 import { connect } from 'react-redux';
 import { setUser } from '../../dux/reducer';
 import './user_profile.scss';
@@ -84,44 +84,27 @@ class UserProfile extends Component {
 
     // console.log('*** Props User: ', this.props.user);
 
-    const GetUser = (auth0_id) => {
-      const { loading, error, data } = useQuery(GET_USER, {
-        variables: { auth0_id },
-      });
+    const getUser = (auth0_id) => (
+      <Query query={GET_USER} variables={{ auth0_id }}>
+        {({ loading, error, data }) => {
+          if (loading) return <h1>Loading Data...</h1>;
+          if (error) return <h1>Server Connection Error</h1>;
 
-      if (loading) return <h1>Loading Data...</h1>;
-      if (error) return <h1>Server Connection Error</h1>;
+          // console.log('data', data);
 
-      // console.log('data', data);
+          address_id = data.user.address
+            ? +data.user.address.address_id
+            : 'Please Log In';
 
-      address_id = data.user.address
-        ? +data.user.address.address_id
-        : 'Please Log In';
-
-      return <UserProfile userInfo={data.user} />;
-    };
-
-    // const getUser = (auth0_id) => (
-    //   <useQuery query={GET_USER} variables={{ auth0_id }}>
-    //     {({ loading, error, data }) => {
-    //       if (loading) return <h1>Loading Data...</h1>;
-    //       if (error) return <h1>Server Connection Error</h1>;
-
-    //       // console.log('data', data);
-
-    //       address_id = data.user.address
-    //         ? +data.user.address.address_id
-    //         : 'Please Log In';
-
-    //       return <UserProfile userInfo={data.user} />;
-    //     }}
-    //   </useQuery>
-    // );
+          return <UserProfile userInfo={data.user} />;
+        }}
+      </Query>
+    );
 
     return this.props.user || this.props.userInfo ? (
       <React.Fragment>
         {!this.state.auth0_id ? (
-          <div>{GetUser(user_id, this.fillUserData)}</div>
+          <div>{getUser(user_id, this.fillUserData)}</div>
         ) : (
           <div className='user-profile-container'>
             <div className='edit-info-container'>
@@ -268,7 +251,7 @@ class UserProfile extends Component {
               )}
               {editingState === 'update' && (
                 <React.Fragment>
-                  <useMutation
+                  <Mutation
                     mutation={UPDATE_USER}
                     refetchQueries={[{ query: GET_USER }]}
                     onCompleted={() =>
@@ -304,8 +287,8 @@ class UserProfile extends Component {
                         {error && <h1>Error!</h1>}
                       </div>
                     )}
-                  </useMutation>
-                  <useMutation
+                  </Mutation>
+                  <Mutation
                     mutation={DELETE_USER}
                     refetchQueries={[{ query: GET_USER }]}
                     onCompleted={() =>
@@ -325,7 +308,7 @@ class UserProfile extends Component {
                         Delete User
                       </button>
                     )}
-                  </useMutation>
+                  </Mutation>
                   <button
                     className='edit-btns'
                     onClick={() => this.setState({ editingState: false })}
@@ -353,7 +336,7 @@ class UserProfile extends Component {
               )}
               {editingState === 'add' && (
                 <React.Fragment>
-                  <useMutation
+                  <Mutation
                     mutation={NEW_ADDRESS}
                     refetchQueries={[{ query: GET_USER }]}
                     onCompleted={() =>
@@ -389,7 +372,7 @@ class UserProfile extends Component {
                         {error && <h1>Error!</h1>}
                       </div>
                     )}
-                  </useMutation>
+                  </Mutation>
                   <button
                     className='edit-btns'
                     onClick={() => this.setState({ editingState: false })}
@@ -417,7 +400,7 @@ class UserProfile extends Component {
               )}
               {editingState === 'edit' && (
                 <React.Fragment>
-                  <useMutation
+                  <Mutation
                     mutation={NEW_ADDRESS}
                     refetchQueries={[{ query: GET_USER }]}
                     onCompleted={() =>
@@ -454,9 +437,9 @@ class UserProfile extends Component {
                         {error && <h1>Error!</h1>}
                       </div>
                     )}
-                  </useMutation>
+                  </Mutation>
 
-                  <useMutation
+                  <Mutation
                     mutation={DELETE_ADDRESS}
                     refetchQueries={[{ query: GET_USER }]}
                     onCompleted={() =>
@@ -476,7 +459,7 @@ class UserProfile extends Component {
                         Delete Address
                       </button>
                     )}
-                  </useMutation>
+                  </Mutation>
                   <button
                     className='edit-btns'
                     onClick={() => this.setState({ editingState: false })}

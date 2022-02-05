@@ -96,8 +96,8 @@ module.exports = {
       .then(accessTokenForUserInfo)
       .then(storeUserInfo)
       .catch((error) => {
-        console.log('***error with login: ', error);
-        res.status(500).send('something went wrong on the server.');
+        console.log('***Error with login: ', error);
+        res.status(500).send('Something went wrong on the server.');
       });
   },
 
